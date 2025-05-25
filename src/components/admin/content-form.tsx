@@ -65,91 +65,34 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
     setIsLoading(true);
 
     try {
-      const table = type === 'industry' ? 'industries' : `${type}s`; // Special case for 'industry' -> 'industries'
-      let data = { ...formData };
-
-      // Format services array for industries and solutions
-      if (type !== 'achievement' && typeof data.services === 'string') {
-        data.services = (data.services as string).split(',').map(s => s.trim()).filter(Boolean);
-      }
-
-      // Prepare data based on content type
-      let finalData: any = {};
       const now = new Date().toISOString();
-      
-      if (type === 'industry') {
-        const { title, description, icon, services } = data;
-        finalData = { 
-          title, 
-          description, 
-          icon: icon || 'TransportIcon', // Default icon if none selected
-          services: Array.isArray(services) ? services : [],
-          created_at: mode === 'create' ? now : data.created_at,
-          updated_at: now
-        };
-      } else if (type === 'solution') {
-        const { title, description, services } = data;
-        finalData = { 
-          title, 
-          description, 
-          services: Array.isArray(services) ? services : [],
-          created_at: mode === 'create' ? now : data.created_at,
-          updated_at: now
-        };
-      } else if (type === 'achievement') {
-        const { value, title, description } = data;
-        finalData = { 
-          value, 
-          title, 
-          description,
-          created_at: mode === 'create' ? now : data.created_at,
-          updated_at: now
-        };
-      }
-
-      // Validate required fields
-      if (!finalData.title || !finalData.description) {
-        throw new Error('Please fill in all required fields');
-      }
-
-      if (type === 'industry' || type === 'solution') {
-        if (!finalData.services || finalData.services.length === 0) {
-          throw new Error('Please add at least one service');
-        }
-      }
-
-      if (type === 'achievement' && !finalData.value) {
-        throw new Error('Please fill in the value field');
-      }
-
-      console.log('Saving data:', { table, data: finalData, mode, id: initialData?.id });
+      const finalData = {
+        ...formData,
+        created_at: mode === 'create' ? now : initialData?.created_at || now,
+        updated_at: now,
+      };
 
       if (mode === 'create') {
-        const { data: result, error } = await supabase
-          .from(table)
-          .insert([finalData])
-          .select()
-          .single();
+        const { error } = await supabase
+          .from(type)
+          .insert([finalData]);
 
         if (error) throw error;
-        console.log('Created:', result);
       } else if (initialData?.id) {
-        const { data: result, error } = await supabase
-          .from(table)
+        const { error } = await supabase
+          .from(type)
           .update(finalData)
-          .eq('id', initialData.id)
-          .select()
-          .single();
+          .eq('id', initialData.id);
 
         if (error) throw error;
-        console.log('Updated:', result);
       }
 
-      router.push(`/admin/${table}`);
+      router.push(`/admin/${type}`);
       router.refresh();
-    } catch (error: any) {
-      console.error('Error saving content:', error);
-      alert(error.message || 'Error saving content. Please try again.');
+    } catch (error: unknown) {
+      console.error(`Error ${mode === 'create' ? 'creating' : 'updating'} ${type}:`, error);
+      const message = error instanceof Error ? error.message : `Error ${mode === 'create' ? 'creating' : 'updating'} ${type}`;
+      alert(message);
     } finally {
       setIsLoading(false);
     }

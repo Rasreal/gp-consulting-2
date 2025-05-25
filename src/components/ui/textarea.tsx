@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils"
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  /** This interface intentionally left empty as it extends HTMLTextAreaElement attributes.
-   * Additional custom props can be added here if needed in the future.
+  /** This interface intentionally extends HTMLTextAreaElement attributes without adding new properties.
+   * It exists to provide a consistent type naming convention and allow for future extensions.
    */
 }
 

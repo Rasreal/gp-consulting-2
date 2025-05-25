@@ -83,9 +83,10 @@ export default function SolutionsAdminPage() {
 
       setSolutions(data);
       setError(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error details:', error);
-      setError(error.message || 'Error loading solutions');
+      const message = error instanceof Error ? error.message : 'Error loading solutions';
+      setError(message);
       setSolutions(FALLBACK_SOLUTIONS);
     } finally {
       setIsLoading(false);

@@ -83,9 +83,10 @@ export default function IndustriesAdminPage() {
 
       setIndustries(data);
       setError(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error details:', error);
-      setError(error.message || 'Error loading industries');
+      const message = error instanceof Error ? error.message : 'Error loading industries';
+      setError(message);
       setIndustries(FALLBACK_INDUSTRIES);
     } finally {
       setIsLoading(false);
