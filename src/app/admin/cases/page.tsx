@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Case } from '@/types/content';
@@ -41,8 +40,7 @@ export default function CasesAdminPage() {
     image: '',
     tags: ['']
   });
-  
-  const router = useRouter();
+
 
   useEffect(() => {
     fetchCases();
@@ -101,16 +99,21 @@ export default function CasesAdminPage() {
         }])
         .select()
         .single();
-
+      console.log("data:", data);
       if (error) throw error;
 
       toast.success('Case created successfully');
       setIsDialogOpen(false);
       resetForm();
       await fetchCases();
-    } catch (error: any) {
-      console.error('Error creating case:', error);
-      toast.error(error.message);
+    } catch (error: unknown) {
+      console.error('Error updating case:', error);
+
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Unknown error occurred');
+      }
     }
   };
 
@@ -133,9 +136,14 @@ export default function CasesAdminPage() {
       setCurrentCase(null);
       resetForm();
       await fetchCases();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating case:', error);
-      toast.error(error.message);
+
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Unknown error occurred');
+      }
     }
   };
 
