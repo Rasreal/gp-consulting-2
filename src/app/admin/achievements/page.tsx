@@ -1,31 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Achievement } from '@/types/content';
-import { 
-  Loader2, 
-  Plus, 
-  Pencil, 
-  Trash2, 
-  CheckCircle, 
-  XCircle 
-} from 'lucide-react';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from 'sonner';
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Loader2, Plus, Pencil, Trash2 } from 'lucide-react';
 
 export default function AchievementsAdminPage() {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
@@ -36,10 +26,8 @@ export default function AchievementsAdminPage() {
   const [formData, setFormData] = useState({
     value: '',
     title: '',
-    description: ''
+    description: '',
   });
-  
-  const router = useRouter();
 
   useEffect(() => {
     fetchAchievements();
@@ -68,46 +56,66 @@ export default function AchievementsAdminPage() {
 
   async function fetchAchievements() {
     try {
-      setIsLoading(true);
+      console.log('Fetching achievements...');
       const { data, error: fetchError } = await supabase
         .from('achievements')
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (fetchError) throw fetchError;
+      if (fetchError) {
+        console.error('Supabase error:', fetchError);
+        throw fetchError;
+      }
 
+      console.log('Fetched achievements:', data);
       setAchievements(data || []);
       setError(null);
-    } catch (error: any) {
-      console.error('Error fetching achievements:', error);
-      setError(error.message);
+    } catch (error: unknown) {
+      console.error('Error details:', error);
+      const message = error instanceof Error ? error.message : 'Error loading achievements';
+      setError(message);
     } finally {
       setIsLoading(false);
     }
   }
 
+  const openCreateDialog = () => {
+    setCurrentAchievement(null);
+    setFormData({
+      value: '',
+      title: '',
+      description: '',
+    });
+    setIsDialogOpen(true);
+  };
+
+  const openEditDialog = (achievement: Achievement) => {
+    setCurrentAchievement(achievement);
+    setFormData({
+      value: achievement.value,
+      title: achievement.title,
+      description: achievement.description,
+    });
+    setIsDialogOpen(true);
+  };
+
   const handleCreate = async () => {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('achievements')
-        .insert([formData])
-        .select()
-        .single();
+        .insert([formData]);
 
       if (error) throw error;
-
-      toast.success('Achievement created successfully');
       setIsDialogOpen(false);
-      setFormData({ value: '', title: '', description: '' });
-      await fetchAchievements();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error creating achievement:', error);
-      toast.error(error.message);
+      const message = error instanceof Error ? error.message : 'Error creating achievement';
+      alert(message);
     }
   };
 
   const handleUpdate = async () => {
-    if (!currentAchievement?.id) return;
+    if (!currentAchievement) return;
 
     try {
       const { error } = await supabase
@@ -116,15 +124,11 @@ export default function AchievementsAdminPage() {
         .eq('id', currentAchievement.id);
 
       if (error) throw error;
-
-      toast.success('Achievement updated successfully');
       setIsDialogOpen(false);
-      setCurrentAchievement(null);
-      setFormData({ value: '', title: '', description: '' });
-      await fetchAchievements();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating achievement:', error);
-      toast.error(error.message);
+      const message = error instanceof Error ? error.message : 'Error updating achievement';
+      alert(message);
     }
   };
 
@@ -138,45 +142,17 @@ export default function AchievementsAdminPage() {
         .eq('id', id);
 
       if (error) throw error;
-
-      toast.success('Achievement deleted successfully');
-      await fetchAchievements();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error deleting achievement:', error);
-      toast.error(error.message);
+      const message = error instanceof Error ? error.message : 'Error deleting achievement';
+      alert(message);
     }
-  };
-
-  const openEditDialog = (achievement: Achievement) => {
-    setCurrentAchievement(achievement);
-    setFormData({
-      value: achievement.value,
-      title: achievement.title,
-      description: achievement.description
-    });
-    setIsDialogOpen(true);
-  };
-
-  const openCreateDialog = () => {
-    setCurrentAchievement(null);
-    setFormData({ value: '', title: '', description: '' });
-    setIsDialogOpen(true);
   };
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="w-8 h-8 animate-spin" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <XCircle className="w-12 h-12 text-red-500" />
-        <p className="text-xl text-red-500">{error}</p>
-        <Button onClick={fetchAchievements}>Try Again</Button>
       </div>
     );
   }

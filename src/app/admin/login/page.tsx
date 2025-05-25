@@ -15,10 +15,6 @@ export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
   const checkAuth = async () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -39,6 +35,12 @@ export default function AdminLoginPage() {
       console.error('Auth check error:', error);
     }
   };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  // We intentionally omit checkAuth from dependencies as it would cause an infinite loop
+  // since it contains router.push which changes on every render
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,9 +67,10 @@ export default function AdminLoginPage() {
 
       router.push('/admin');
       router.refresh();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
-      setError('Invalid credentials or unauthorized access');
+      const message = error instanceof Error ? error.message : 'Invalid credentials or unauthorized access';
+      setError(message);
     } finally {
       setIsLoading(false);
     }

@@ -1,5 +1,7 @@
 "use client";
 
+import * as React from "react";
+import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -21,6 +23,7 @@ interface Feature73Props {
   description?: string;
   linkUrl?: string;
   linkText?: string;
+  className?: string;
 }
 
 // Icon mapping
@@ -107,12 +110,10 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
-export const Feature73 = ({
-  heading = "Отрасли",
-  description = "Экспертиза в ключевых секторах экономики",
-  linkUrl = "/industries",
-  linkText = "Узнать больше",
-}: Feature73Props) => {
+function Feature73({
+  className,
+  ...props
+}: Feature73Props) {
   const [features, setFeatures] = useState<Industry[]>(DEFAULT_FEATURES);
 
   useEffect(() => {
@@ -156,7 +157,7 @@ export const Feature73 = ({
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-semibold text-gp-primary"
           >
-            {heading}
+            {props.heading}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
@@ -165,7 +166,7 @@ export const Feature73 = ({
             viewport={{ once: true }}
             className="mt-4 text-lg text-gp-primary/80 max-w-sm"
           >
-            {description}
+            {props.description}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, x: -5 }}
@@ -174,8 +175,8 @@ export const Feature73 = ({
             viewport={{ once: true }}
             className="mt-6"
           >
-            <Link href={linkUrl} className="inline-flex items-center gap-2 text-base font-medium text-gp-accent hover:text-gp-primary transition">
-              {linkText} <ArrowRight className="size-4" />
+            <Link href={props.linkUrl} className="inline-flex items-center gap-2 text-base font-medium text-gp-accent hover:text-gp-primary transition">
+              {props.linkText} <ArrowRight className="size-4" />
             </Link>
           </motion.div>
         </header>
@@ -204,4 +205,6 @@ export const Feature73 = ({
       </div>
     </section>
   );
-}; 
+}
+
+export { Feature73 }; 

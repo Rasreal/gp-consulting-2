@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/card';
 import { Factory, Lightbulb, Trophy, Briefcase } from 'lucide-react';
+import Link from 'next/link';
 
 interface Stats {
   industries: number;
@@ -102,37 +103,37 @@ export default function AdminDashboard() {
       <div className="mt-12">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <a
+          <Link
             href="/admin/industries/new"
             className="block p-6 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
           >
             <h3 className="text-base font-semibold text-gray-900">Add Industry</h3>
             <p className="mt-1 text-sm text-gray-600">Create a new industry entry</p>
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/admin/solutions/new"
             className="block p-6 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
           >
             <h3 className="text-base font-semibold text-gray-900">Add Solution</h3>
             <p className="mt-1 text-sm text-gray-600">Create a new solution entry</p>
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/admin/achievements/new"
             className="block p-6 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
           >
             <h3 className="text-base font-semibold text-gray-900">Add Achievement</h3>
             <p className="mt-1 text-sm text-gray-600">Create a new achievement entry</p>
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/admin/cases"
             className="block p-6 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
           >
             <h3 className="text-base font-semibold text-gray-900">Manage Cases</h3>
             <p className="mt-1 text-sm text-gray-600">View and edit case studies</p>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

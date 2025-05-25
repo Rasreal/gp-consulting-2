@@ -3,34 +3,34 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { Achievement } from '@/types/content';
-import { ContentForm } from '@/components/admin/content-form';
+import { Case } from '@/types/content';
+import { CaseForm } from '@/components/admin/case-form';
 import { Loader2 } from 'lucide-react';
 
-export default function EditAchievementPage() {
+export default function EditCasePage() {
   const { id } = useParams();
-  const [achievement, setAchievement] = useState<Achievement | null>(null);
+  const [caseData, setCaseData] = useState<Case | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAchievement() {
+    async function fetchCase() {
       try {
         const { data, error } = await supabase
-          .from('achievements')
+          .from('cases')
           .select('*')
           .eq('id', id)
           .single();
 
         if (error) throw error;
-        setAchievement(data);
+        setCaseData(data);
       } catch (error) {
-        console.error('Error fetching achievement:', error);
+        console.error('Error fetching case:', error);
       } finally {
         setIsLoading(false);
       }
     }
 
-    fetchAchievement();
+    fetchCase();
   }, [id]);
 
   if (isLoading) {
@@ -41,20 +41,20 @@ export default function EditAchievementPage() {
     );
   }
 
-  if (!achievement) {
+  if (!caseData) {
     return (
       <div className="text-center py-12">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Achievement not found</h1>
-        <p className="text-gray-600">The achievement you&apos;re looking for doesn&apos;t exist.</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Case not found</h1>
+        <p className="text-gray-600">The case you&apos;re looking for doesn&apos;t exist.</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Edit Achievement</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">Edit Case</h1>
       <div className="max-w-2xl">
-        <ContentForm type="achievement" mode="edit" initialData={achievement} />
+        <CaseForm mode="edit" initialData={caseData} />
       </div>
     </div>
   );

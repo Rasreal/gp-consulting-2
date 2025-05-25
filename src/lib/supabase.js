@@ -37,26 +37,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.supabase = void 0;
-var supabase_js_1 = require("@supabase/supabase-js");
+var createClient = require("@supabase/supabase-js").createClient;
 var supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 var supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables. Please check your .env file.');
+if (!supabaseUrl) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable');
+}
+if (!supabaseAnonKey) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable');
 }
 console.log('Initializing Supabase client with:', {
     url: supabaseUrl,
     hasAnonKey: !!supabaseAnonKey
 });
-exports.supabase = (0, supabase_js_1.createClient)(supabaseUrl, supabaseAnonKey, {
-    auth: {
-        autoRefreshToken: true,
-        persistSession: true,
-        detectSessionInUrl: true
-    },
-    db: {
-        schema: 'public'
-    }
-});
+exports.supabase = createClient(supabaseUrl, supabaseAnonKey);
 // Test the connection
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var _a, industries, industriesError, _b, solutions, solutionsError, _c, achievements, achievementsError, error_1;

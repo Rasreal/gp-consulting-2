@@ -10,6 +10,9 @@ import {
   ManufacturingIcon
 } from "@/components/icons/industry-icons";
 import { CTASection } from "@/components/cta-section";
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import { Loader2 } from 'lucide-react';
 
 // Icon mapping
 const iconMap = {
@@ -19,8 +22,59 @@ const iconMap = {
   ManufacturingIcon
 };
 
+interface Industry {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  services: string[];
+  created_at: string;
+  updated_at: string;
+}
+
 export default function IndustriesPage() {
-  const { data: industries, isLoading } = useIndustries();
+  const [industries, setIndustries] = useState<Industry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchIndustries() {
+      try {
+        const { data, error } = await supabase
+          .from('industries')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        setIndustries(data || []);
+      } catch (error: unknown) {
+        console.error('Error fetching industries:', error);
+        const message = error instanceof Error ? error.message : 'Error loading industries';
+        setError(message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchIndustries();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-2xl font-bold text-red-600">Error</h2>
+        <p className="mt-2 text-gray-600">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <PageTemplate>
@@ -51,14 +105,14 @@ export default function IndustriesPage() {
       <section className="py-1">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {industries?.map((industry, index) => {
+            {industries.map((industry) => {
               const Icon = iconMap[industry.icon as keyof typeof iconMap];
               return (
                 <motion.div
                   key={industry.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={{ delay: 0.05 }}
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.02 }}
                   className="glass-card p-8 hover:border-black border border-gray-200"

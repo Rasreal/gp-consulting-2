@@ -129,6 +129,7 @@ export default function AchievementsPage() {
   const [cases, setCases] = useState<Case[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [casesLoading, setCasesLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -158,8 +159,10 @@ export default function AchievementsPage() {
         } else {
           setCases(casesResponse.data?.length ? casesResponse.data : DEFAULT_CASES);
         }
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('Error:', error);
+        const message = error instanceof Error ? error.message : 'Error loading achievements and cases';
+        setError(message);
         setAchievements(DEFAULT_METRICS);
         setCases(DEFAULT_CASES);
       } finally {
@@ -170,6 +173,23 @@ export default function AchievementsPage() {
 
     fetchData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-2xl font-bold text-red-600">Error</h2>
+        <p className="mt-2 text-gray-600">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <PageTemplate>

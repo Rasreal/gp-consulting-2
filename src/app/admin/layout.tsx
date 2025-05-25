@@ -1,6 +1,5 @@
 'use client';
 
-import { redirect } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { AdminSidebar } from '@/components/admin/sidebar';
 import { useEffect, useState } from 'react';
@@ -65,7 +64,7 @@ export default function AdminLayout({
     checkAuth();
 
     // Subscribe to auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
       if (!mounted) return;
 
       if (event === 'SIGNED_IN') {
