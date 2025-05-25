@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { PageTemplate } from "@/components/ui/page-template";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download, FileText, Calendar, Users } from "lucide-react";
+import { Download, FileText, Calendar } from "lucide-react";
 import { useState } from "react";
 import {
   Dialog,
@@ -17,7 +17,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import Link from "next/link";
 import { CTASection } from "@/components/cta-section";
 
 const categories = ["Все", "Телеком", "Логистика", "AI-тенденции"];

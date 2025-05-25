@@ -288,7 +288,7 @@ export default function ContactsPage() {
                     </h3>
                     <p className="text-gp-primary/70 mb-4">
                       г. Астана, ул. Достык 20<br />
-                      БЦ "Москва", 15 этаж
+                      БЦ &#34;Москва&#34;, 15 этаж
                     </p>
                     <Button 
                       size="sm"
