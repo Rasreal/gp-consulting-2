@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase';
 import { Industry, Solution, Achievement } from '@/types/content';
 
+const now = new Date().toISOString();
+
 const industries: Omit<Industry, 'id'>[] = [
   {
     title: "Транспорт",
@@ -11,7 +13,9 @@ const industries: Omit<Industry, 'id'>[] = [
       "Оптимизация маршрутов с помощью ИИ",
       "IoT-мониторинг транспортных средств",
       "Предиктивное обслуживание техники"
-    ]
+    ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "Телеком",
@@ -22,7 +26,9 @@ const industries: Omit<Industry, 'id'>[] = [
       "AI-аналитика клиентского поведения",
       "Персонализированный таргетинг",
       "Оптимизация сетевой инфраструктуры"
-    ]
+    ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "Логистика",
@@ -33,7 +39,9 @@ const industries: Omit<Industry, 'id'>[] = [
       "Прогнозирование спроса и поставок",
       "KPI-дашборды в реальном времени",
       "Оптимизация складских процессов"
-    ]
+    ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "Производство",
@@ -44,7 +52,9 @@ const industries: Omit<Industry, 'id'>[] = [
       "IoT-мониторинг производства",
       "AI-контроль качества продукции",
       "Предиктивное обслуживание оборудования"
-    ]
+    ],
+    created_at: now,
+    updated_at: now
   }
 ];
 
@@ -59,6 +69,8 @@ const solutions: Omit<Solution, 'id'>[] = [
       "Бизнес-моделирование",
       "Инновационная стратегия",
     ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "Разработка продуктов",
@@ -70,6 +82,8 @@ const solutions: Omit<Solution, 'id'>[] = [
       "SaaS-решения",
       "Мобильные приложения",
     ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "AI и автоматизация",
@@ -81,6 +95,8 @@ const solutions: Omit<Solution, 'id'>[] = [
       "Машинное обучение",
       "Предиктивная аналитика",
     ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "Маркетинг и рост",
@@ -92,6 +108,8 @@ const solutions: Omit<Solution, 'id'>[] = [
       "Performance Marketing",
       "Аналитика и A/B тесты",
     ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "IT и цифровизация",
@@ -103,6 +121,8 @@ const solutions: Omit<Solution, 'id'>[] = [
       "Облачная инфраструктура",
       "Техническая поддержка",
     ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "FinOps",
@@ -114,6 +134,8 @@ const solutions: Omit<Solution, 'id'>[] = [
       "Оптимизация расходов",
       "Финансовая аналитика",
     ],
+    created_at: now,
+    updated_at: now
   },
   {
     title: "DevOps",
@@ -125,14 +147,16 @@ const solutions: Omit<Solution, 'id'>[] = [
       "Контейнеризация",
       "Мониторинг и логирование",
     ],
+    created_at: now,
+    updated_at: now
   },
 ];
 
 const achievements: Omit<Achievement, 'id'>[] = [
-  { value: "> 25", label: "AI-моделей", description: "Внедрено в производство" },
-  { value: "−30%", label: "OPEX", description: "Сокращение операционных расходов" },
-  { value: "+18 pp", label: "LTV", description: "Увеличение жизненной ценности клиента" },
-  { value: "95%", label: "Точность", description: "Прогнозных моделей" }
+  { value: "> 25", title: "AI-моделей", description: "Внедрено в производство", created_at: now, updated_at: now },
+  { value: "−30%", title: "OPEX", description: "Сокращение операционных расходов", created_at: now, updated_at: now },
+  { value: "+18 pp", title: "LTV", description: "Увеличение жизненной ценности клиента", created_at: now, updated_at: now },
+  { value: "95%", title: "Точность", description: "Прогнозных моделей", created_at: now, updated_at: now }
 ];
 
 async function seedData() {

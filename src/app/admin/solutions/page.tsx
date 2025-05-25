@@ -13,6 +13,7 @@ const FALLBACK_SOLUTIONS: Solution[] = [
     id: '1',
     title: 'AI Transformation',
     description: 'Enterprise AI and ML solutions',
+    icon: 'ai',
     services: ['Machine Learning', 'Neural Networks', 'Data Analytics'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
@@ -21,6 +22,7 @@ const FALLBACK_SOLUTIONS: Solution[] = [
     id: '2',
     title: 'Digital Transformation',
     description: 'End-to-end digital solutions',
+    icon: 'digital',
     services: ['Process Automation', 'Cloud Migration', 'Digital Strategy'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()

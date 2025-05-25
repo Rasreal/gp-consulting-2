@@ -20,7 +20,6 @@ import { Loader2, Plus, Pencil, Trash2 } from 'lucide-react';
 export default function AchievementsAdminPage() {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [formData, setFormData] = useState({
@@ -69,11 +68,10 @@ export default function AchievementsAdminPage() {
 
       console.log('Fetched achievements:', data);
       setAchievements(data || []);
-      setError(null);
     } catch (error: unknown) {
       console.error('Error details:', error);
       const message = error instanceof Error ? error.message : 'Error loading achievements';
-      setError(message);
+      alert(message);
     } finally {
       setIsLoading(false);
     }

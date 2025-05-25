@@ -36,8 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-require("dotenv/config"); // ✅ обязательно первой строкой
-import { supabase } from '@/lib/supabase';
+import 'dotenv/config';
+import { supabase } from '../lib/supabase';
 
 async function checkData() {
     try {

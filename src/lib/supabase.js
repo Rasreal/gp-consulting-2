@@ -52,37 +52,44 @@ console.log('Initializing Supabase client with:', {
 });
 exports.supabase = createClient(supabaseUrl, supabaseAnonKey);
 // Test the connection
-(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, industries, industriesError, _b, solutions, solutionsError, _c, achievements, achievementsError, error_1;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
-            case 0:
-                _d.trys.push([0, 4, , 5]);
-                console.log('Testing Supabase connection...');
-                return [4 /*yield*/, exports.supabase
-                        .from('industries')
-                        .select('count')];
-            case 1:
-                _a = _d.sent(), industries = _a.data, industriesError = _a.error;
-                console.log('Industries count:', industries, 'Error:', industriesError);
-                return [4 /*yield*/, exports.supabase
-                        .from('solutions')
-                        .select('count')];
-            case 2:
-                _b = _d.sent(), solutions = _b.data, solutionsError = _b.error;
-                console.log('Solutions count:', solutions, 'Error:', solutionsError);
-                return [4 /*yield*/, exports.supabase
-                        .from('achievements')
-                        .select('count')];
-            case 3:
-                _c = _d.sent(), achievements = _c.data, achievementsError = _c.error;
-                console.log('Achievements count:', achievements, 'Error:', achievementsError);
-                return [3 /*break*/, 5];
-            case 4:
-                error_1 = _d.sent();
-                console.error('Supabase connection test failed:', error_1);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); })();
+async function testConnection() {
+    try {
+        console.log('Testing Supabase connection...');
+        
+        var _a, industries, industriesError, _b, solutions, solutionsError, _c, achievements, achievementsError;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    _d.trys.push([0, 4, , 5]);
+                    return [4 /*yield*/, exports.supabase
+                            .from('industries')
+                            .select('count')];
+                case 1:
+                    _a = _d.sent(), industries = _a.data, industriesError = _a.error;
+                    console.log('Industries count:', industries, 'Error:', industriesError);
+                    return [4 /*yield*/, exports.supabase
+                            .from('solutions')
+                            .select('count')];
+                case 2:
+                    _b = _d.sent(), solutions = _b.data, solutionsError = _b.error;
+                    console.log('Solutions count:', solutions, 'Error:', solutionsError);
+                    return [4 /*yield*/, exports.supabase
+                            .from('achievements')
+                            .select('count')];
+                case 3:
+                    _c = _d.sent(), achievements = _c.data, achievementsError = _c.error;
+                    console.log('Achievements count:', achievements, 'Error:', achievementsError);
+                    return [3 /*break*/, 5];
+                case 4:
+                    error_1 = _d.sent();
+                    console.error('Supabase connection test failed:', error_1);
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    }
+    catch (error) {
+        console.error('Supabase connection test failed:', error);
+    }
+}
+testConnection();

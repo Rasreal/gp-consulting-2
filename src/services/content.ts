@@ -8,7 +8,9 @@ export const DEFAULT_INDUSTRIES: Industry[] = [
     title: 'Healthcare',
     description: 'Innovative solutions for healthcare providers',
     icon: 'medical',
-    services: ['Medical Records', 'Patient Care', 'Hospital Management']
+    services: ['Medical Records', 'Patient Care', 'Hospital Management'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   // Add your current static data here
 ];
@@ -19,7 +21,9 @@ export const DEFAULT_SOLUTIONS: Solution[] = [
     title: 'Digital Transformation',
     description: 'Complete digital transformation services',
     icon: 'digital',
-    services: ['Process Automation', 'Cloud Migration', 'Digital Strategy']
+    services: ['Process Automation', 'Cloud Migration', 'Digital Strategy'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   // Add your current static data here
 ];
@@ -29,7 +33,9 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     id: '1',
     title: 'Projects Completed',
     value: '500+',
-    description: 'Successfully delivered projects'
+    description: 'Successfully delivered projects',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   // Add your current static data here
 ];

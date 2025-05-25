@@ -89,7 +89,7 @@ const Input = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$
         ...props
     }, void 0, false, {
         fileName: "[project]/src/components/ui/input.tsx",
-        lineNumber: 13,
+        lineNumber: 15,
         columnNumber: 7
     }, this);
 });

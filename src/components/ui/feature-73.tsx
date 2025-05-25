@@ -1,11 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ComponentType, SVGProps, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IndustryCard } from "./industry-card";
 import { supabase } from "@/lib/supabase";
 import { Industry } from "@/types/content";
@@ -23,7 +22,6 @@ interface Feature73Props {
   description?: string;
   linkUrl?: string;
   linkText?: string;
-  className?: string;
 }
 
 // Icon mapping
@@ -111,7 +109,6 @@ const itemVariants = {
 };
 
 function Feature73({
-  className,
   ...props
 }: Feature73Props) {
   const [features, setFeatures] = useState<Industry[]>(DEFAULT_FEATURES);
@@ -175,7 +172,7 @@ function Feature73({
             viewport={{ once: true }}
             className="mt-6"
           >
-            <Link href={props.linkUrl} className="inline-flex items-center gap-2 text-base font-medium text-gp-accent hover:text-gp-primary transition">
+            <Link href={props.linkUrl || ''} className="inline-flex items-center gap-2 text-base font-medium text-gp-accent hover:text-gp-primary transition">
               {props.linkText} <ArrowRight className="size-4" />
             </Link>
           </motion.div>

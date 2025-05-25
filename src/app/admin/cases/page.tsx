@@ -72,18 +72,19 @@ export default function CasesAdminPage() {
   async function fetchCases() {
     try {
       setIsLoading(true);
-      const { data, error: fetchError } = await supabase
+      const { data: casesData, error: fetchError } = await supabase
         .from('cases')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (fetchError) throw fetchError;
 
-      setCases(data || []);
+      setCases(casesData || []);
       setError(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching cases:', error);
-      setError(error.message);
+      const message = error instanceof Error ? error.message : 'Error loading cases';
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -142,18 +143,16 @@ export default function CasesAdminPage() {
     if (!confirm('Are you sure you want to delete this case?')) return;
 
     try {
-      const { error } = await supabase
+      const { error: deleteError } = await supabase
         .from('cases')
         .delete()
         .eq('id', id);
 
-      if (error) throw error;
-
-      toast.success('Case deleted successfully');
-      await fetchCases();
-    } catch (error: any) {
+      if (deleteError) throw deleteError;
+    } catch (error: unknown) {
       console.error('Error deleting case:', error);
-      toast.error(error.message);
+      const message = error instanceof Error ? error.message : 'Error deleting case';
+      alert(message);
     }
   };
 

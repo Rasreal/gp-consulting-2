@@ -1065,7 +1065,7 @@ const itemVariants = {
         }
     }
 };
-function Feature73({ className, ...props }) {
+function Feature73({ ...props }) {
     _s();
     const [features, setFeatures] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(DEFAULT_FEATURES);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -1121,7 +1121,7 @@ function Feature73({ className, ...props }) {
                             children: props.heading
                         }, void 0, false, {
                             fileName: "[project]/src/components/ui/feature-73.tsx",
-                            lineNumber: 153,
+                            lineNumber: 150,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].p, {
@@ -1144,7 +1144,7 @@ function Feature73({ className, ...props }) {
                             children: props.description
                         }, void 0, false, {
                             fileName: "[project]/src/components/ui/feature-73.tsx",
-                            lineNumber: 162,
+                            lineNumber: 159,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1165,7 +1165,7 @@ function Feature73({ className, ...props }) {
                             },
                             className: "mt-6",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: props.linkUrl,
+                                href: props.linkUrl || '',
                                 className: "inline-flex items-center gap-2 text-base font-medium text-gp-accent hover:text-gp-primary transition",
                                 children: [
                                     props.linkText,
@@ -1174,24 +1174,24 @@ function Feature73({ className, ...props }) {
                                         className: "size-4"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ui/feature-73.tsx",
-                                        lineNumber: 179,
+                                        lineNumber: 176,
                                         columnNumber: 32
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ui/feature-73.tsx",
-                                lineNumber: 178,
+                                lineNumber: 175,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/ui/feature-73.tsx",
-                            lineNumber: 171,
+                            lineNumber: 168,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/ui/feature-73.tsx",
-                    lineNumber: 152,
+                    lineNumber: 149,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1213,29 +1213,29 @@ function Feature73({ className, ...props }) {
                                 href: `/industries/${feature.id}`
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ui/feature-73.tsx",
-                                lineNumber: 195,
+                                lineNumber: 192,
                                 columnNumber: 17
                             }, this)
                         }, feature.id, false, {
                             fileName: "[project]/src/components/ui/feature-73.tsx",
-                            lineNumber: 194,
+                            lineNumber: 191,
                             columnNumber: 15
                         }, this);
                     })
                 }, void 0, false, {
                     fileName: "[project]/src/components/ui/feature-73.tsx",
-                    lineNumber: 184,
+                    lineNumber: 181,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/ui/feature-73.tsx",
-            lineNumber: 151,
+            lineNumber: 148,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/ui/feature-73.tsx",
-        lineNumber: 150,
+        lineNumber: 147,
         columnNumber: 5
     }, this);
 }

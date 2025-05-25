@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { PageTemplate } from "@/components/ui/page-template";
-import { useIndustries } from "@/hooks/use-content";
+
 import { 
   TransportIcon, 
   TelecomIcon, 
