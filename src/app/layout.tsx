@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Navbar } from "@/components/ui/navbar";
-import { FooterDemo } from "@/components/footer-demo";
 import { WaveBackgroundWrapper } from "@/components/ui/wave-background-wrapper";
+import { Providers } from './providers';
+import { Toaster } from 'sonner';
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -24,12 +24,11 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${inter.variable} font-sans`}>
-        <WaveBackgroundWrapper />
-        <Navbar />
-        <div className="flex min-h-screen flex-col">
-          <main className="flex-1">{children}</main>
-          <FooterDemo />
-        </div>
+        <Providers>
+          <WaveBackgroundWrapper />
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

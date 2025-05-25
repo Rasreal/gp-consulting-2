@@ -3,8 +3,10 @@
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ComponentType, SVGProps } from "react";
+import { ComponentType, SVGProps, useEffect, useState } from "react";
 import { IndustryCard } from "./industry-card";
+import { supabase } from "@/lib/supabase";
+import { Industry } from "@/types/content";
 import { 
   TransportIcon, 
   TelecomIcon, 
@@ -14,21 +16,80 @@ import {
   EnergyIcon
 } from "../icons/industry-icons";
 
-interface Feature {
-  id: string;
-  title: string;
-  description: string;
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
-  href: string;
-}
-
 interface Feature73Props {
   heading?: string;
   description?: string;
   linkUrl?: string;
   linkText?: string;
-  features?: Feature[];
 }
+
+// Icon mapping
+const iconMap = {
+  TransportIcon,
+  TelecomIcon,
+  FinanceIcon,
+  LogisticsIcon,
+  ManufacturingIcon,
+  EnergyIcon
+};
+
+// Default data as fallback
+const DEFAULT_FEATURES: Industry[] = [
+  {
+    id: "transport",
+    title: "Транспорт",
+    description: "Оптимизация процессов и внедрение современных технологий в транспортном секторе для повышения эффективности и безопасности.",
+    icon: "TransportIcon",
+    services: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: "telecom",
+    title: "Телеком",
+    description: "Разработка стратегий и решений для телекоммуникационных компаний, направленных на рост и цифровую трансформацию.",
+    icon: "TelecomIcon",
+    services: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: "finance",
+    title: "Финансы",
+    description: "Внедрение инновационных технологий и аналитических решений для финансовых институтов и банков.",
+    icon: "FinanceIcon",
+    services: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: "logistics",
+    title: "Логистика",
+    description: "Автоматизация и оптимизация логистических процессов с использованием ИИ и передовых аналитических решений.",
+    icon: "LogisticsIcon",
+    services: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: "manufacturing",
+    title: "Производство",
+    description: "Цифровизация производственных процессов, внедрение Industry 4.0 и оптимизация операционной деятельности.",
+    icon: "ManufacturingIcon",
+    services: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: "energy",
+    title: "Энергетика",
+    description: "Стратегические решения для энергетического сектора, включая оптимизацию процессов и внедрение устойчивых практик.",
+    icon: "EnergyIcon",
+    services: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  }
+];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -51,57 +112,39 @@ export const Feature73 = ({
   description = "Экспертиза в ключевых секторах экономики",
   linkUrl = "/industries",
   linkText = "Узнать больше",
-  features = [
-    {
-      id: "feature-1",
-      title: "Транспорт",
-      description:
-        "Оптимизация процессов и внедрение современных технологий в транспортном секторе для повышения эффективности и безопасности.",
-      icon: TransportIcon,
-      href: "/industries/transport",
-    },
-    {
-      id: "feature-2",
-      title: "Телеком",
-      description:
-        "Разработка стратегий и решений для телекоммуникационных компаний, направленных на рост и цифровую трансформацию.",
-      icon: TelecomIcon,
-      href: "/industries/telecom",
-    },
-    {
-      id: "feature-3",
-      title: "Финансы",
-      description:
-        "Внедрение инновационных технологий и аналитических решений для финансовых институтов и банков.",
-      icon: FinanceIcon,
-      href: "/industries/finance",
-    },
-    {
-      id: "feature-4",
-      title: "Логистика",
-      description:
-        "Автоматизация и оптимизация логистических процессов с использованием ИИ и передовых аналитических решений.",
-      icon: LogisticsIcon,
-      href: "/industries/logistics",
-    },
-    {
-      id: "feature-5",
-      title: "Производство",
-      description:
-        "Цифровизация производственных процессов, внедрение Industry 4.0 и оптимизация операционной деятельности.",
-      icon: ManufacturingIcon,
-      href: "/industries/manufacturing",
-    },
-    {
-      id: "feature-6",
-      title: "Энергетика",
-      description:
-        "Стратегические решения для энергетического сектора, включая оптимизацию процессов и внедрение устойчивых практик.",
-      icon: EnergyIcon,
-      href: "/industries/energy",
-    },
-  ],
 }: Feature73Props) => {
+  const [features, setFeatures] = useState<Industry[]>(DEFAULT_FEATURES);
+
+  useEffect(() => {
+    async function fetchIndustries() {
+      try {
+        const { data, error } = await supabase
+          .from('industries')
+          .select('*')
+          .order('created_at', { ascending: true });
+
+        if (error) {
+          console.error('Error fetching industries:', error);
+          setFeatures(DEFAULT_FEATURES);
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          console.log('No industries found, using default data');
+          setFeatures(DEFAULT_FEATURES);
+          return;
+        }
+
+        setFeatures(data);
+      } catch (error) {
+        console.error('Error:', error);
+        setFeatures(DEFAULT_FEATURES);
+      }
+    }
+
+    fetchIndustries();
+  }, []);
+
   return (
     <section className="py-20 lg:py-28">
       <div className="container max-w-[1440px] mx-auto px-6 lg:px-10">
@@ -144,16 +187,19 @@ export const Feature73 = ({
           viewport={{ once: true }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8"
         >
-          {features.map((feature) => (
-            <motion.div key={feature.id} variants={itemVariants}>
-              <IndustryCard
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-                href={feature.href}
-              />
-            </motion.div>
-          ))}
+          {features.map((feature) => {
+            const Icon = iconMap[feature.icon as keyof typeof iconMap];
+            return (
+              <motion.div key={feature.id} variants={itemVariants}>
+                <IndustryCard
+                  icon={Icon || TransportIcon}
+                  title={feature.title}
+                  description={feature.description}
+                  href={`/industries/${feature.id}`}
+                />
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

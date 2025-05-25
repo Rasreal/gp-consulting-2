@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "ts-node --project tsconfig.json src/scripts/seed-data.ts",
+    "check-data": "ts-node --project tsconfig.json src/scripts/check-data.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -14,14 +16,17 @@
     "@radix-ui/react-hover-card": "^1.1.14",
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "^1.2.3",
     "@supabase/supabase-js": "^2.49.8",
     "@tabler/icons-react": "^3.33.0",
+    "@tanstack/react-query": "^5.77.0",
     "@types/mapbox-gl": "^3.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
+    "dotenv": "^16.5.0",
     "embla-carousel-auto-scroll": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.12.2",
@@ -34,6 +39,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.4",
+    "sonner": "^2.0.3",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.25.28"
@@ -48,7 +54,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "tw-animate-css": "^1.3.0",
-    "typescript": "^5"
+    "typescript": "^5.8.3"
   }
 }

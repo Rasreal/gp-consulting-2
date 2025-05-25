@@ -1,0 +1,179 @@
+import { supabase } from '@/lib/supabase';
+import { Industry, Solution, Achievement } from '@/types/content';
+
+const industries: Omit<Industry, 'id'>[] = [
+  {
+    title: "Транспорт",
+    icon: "TransportIcon",
+    description: "Комплексные решения для транспортных компаний, включающие управление автопарком, оптимизацию логистических маршрутов и внедрение IoT-систем мониторинга.",
+    services: [
+      "Система управления автопарком",
+      "Оптимизация маршрутов с помощью ИИ",
+      "IoT-мониторинг транспортных средств",
+      "Предиктивное обслуживание техники"
+    ]
+  },
+  {
+    title: "Телеком",
+    icon: "TelecomIcon",
+    description: "Цифровая трансформация телекоммуникационных компаний с фокусом на автоматизацию биллинга и персонализацию клиентского опыта.",
+    services: [
+      "Автоматизация биллинговых систем",
+      "AI-аналитика клиентского поведения",
+      "Персонализированный таргетинг",
+      "Оптимизация сетевой инфраструктуры"
+    ]
+  },
+  {
+    title: "Логистика",
+    icon: "LogisticsIcon",
+    description: "Автоматизация складских и транспортных процессов с использованием современных WMS/TMS систем и предиктивной аналитики.",
+    services: [
+      "Внедрение WMS/TMS систем",
+      "Прогнозирование спроса и поставок",
+      "KPI-дашборды в реальном времени",
+      "Оптимизация складских процессов"
+    ]
+  },
+  {
+    title: "Производство",
+    icon: "ManufacturingIcon",
+    description: "Цифровизация производственных процессов с внедрением Industry 4.0 технологий и систем контроля качества на базе ИИ.",
+    services: [
+      "Внедрение MES/APS систем",
+      "IoT-мониторинг производства",
+      "AI-контроль качества продукции",
+      "Предиктивное обслуживание оборудования"
+    ]
+  }
+];
+
+const solutions: Omit<Solution, 'id'>[] = [
+  {
+    title: "Стратегия и консалтинг",
+    description: "Помогаем бизнесу определить направление роста",
+    icon: "Target",
+    services: [
+      "Цифровая стратегия",
+      "Организационная трансформация",
+      "Бизнес-моделирование",
+      "Инновационная стратегия",
+    ],
+  },
+  {
+    title: "Разработка продуктов",
+    description: "Создаем продукты, которые решают бизнес-задачи",
+    icon: "Code2",
+    services: [
+      "Разработка MVP",
+      "Цифровые продукты",
+      "SaaS-решения",
+      "Мобильные приложения",
+    ],
+  },
+  {
+    title: "AI и автоматизация",
+    description: "Внедряем искусственный интеллект и автоматизируем процессы",
+    icon: "Brain",
+    services: [
+      "Чат-боты и агенты",
+      "Автоматизация процессов",
+      "Машинное обучение",
+      "Предиктивная аналитика",
+    ],
+  },
+  {
+    title: "Маркетинг и рост",
+    description: "Помогаем привлекать и удерживать клиентов",
+    icon: "BarChart3",
+    services: [
+      "Стратегия роста",
+      "Маркетинг-автоматизация",
+      "Performance Marketing",
+      "Аналитика и A/B тесты",
+    ],
+  },
+  {
+    title: "IT и цифровизация",
+    description: "Внедряем и оптимизируем IT-системы",
+    icon: "Workflow",
+    services: [
+      "Разработка архитектуры",
+      "Интеграция систем",
+      "Облачная инфраструктура",
+      "Техническая поддержка",
+    ],
+  },
+  {
+    title: "FinOps",
+    description: "Оптимизируем финансовые процессы",
+    icon: "Coins",
+    services: [
+      "Бюджетирование",
+      "Финансовое планирование",
+      "Оптимизация расходов",
+      "Финансовая аналитика",
+    ],
+  },
+  {
+    title: "DevOps",
+    description: "Обеспечиваем быстрое и надежное развертывание",
+    icon: "Code2",
+    services: [
+      "CI/CD",
+      "Инфраструктура как код",
+      "Контейнеризация",
+      "Мониторинг и логирование",
+    ],
+  },
+];
+
+const achievements: Omit<Achievement, 'id'>[] = [
+  { value: "> 25", label: "AI-моделей", description: "Внедрено в производство" },
+  { value: "−30%", label: "OPEX", description: "Сокращение операционных расходов" },
+  { value: "+18 pp", label: "LTV", description: "Увеличение жизненной ценности клиента" },
+  { value: "95%", label: "Точность", description: "Прогнозных моделей" }
+];
+
+async function seedData() {
+  try {
+    // Clear existing data
+    await supabase.from('industries').delete().neq('id', '');
+    await supabase.from('solutions').delete().neq('id', '');
+    await supabase.from('achievements').delete().neq('id', '');
+
+    // Insert new data
+    const { error: industriesError } = await supabase
+      .from('industries')
+      .insert(industries);
+
+    if (industriesError) {
+      console.error('Error seeding industries:', industriesError);
+      return;
+    }
+
+    const { error: solutionsError } = await supabase
+      .from('solutions')
+      .insert(solutions);
+
+    if (solutionsError) {
+      console.error('Error seeding solutions:', solutionsError);
+      return;
+    }
+
+    const { error: achievementsError } = await supabase
+      .from('achievements')
+      .insert(achievements);
+
+    if (achievementsError) {
+      console.error('Error seeding achievements:', achievementsError);
+      return;
+    }
+
+    console.log('Successfully seeded data!');
+  } catch (error) {
+    console.error('Error seeding data:', error);
+  }
+}
+
+seedData(); 
