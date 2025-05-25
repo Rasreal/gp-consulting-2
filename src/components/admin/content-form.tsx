@@ -112,10 +112,16 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
       
       router.push(`/admin/${type}s`);
       router.refresh();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error deleting content:', error);
-      alert(error.message || 'Error deleting content. Please try again.');
-    } finally {
+
+      if (error instanceof Error) {
+        alert(error.message || 'Error deleting content. Please try again.');
+      } else {
+        alert('Error deleting content. Please try again.');
+      }
+    }
+    finally {
       setIsLoading(false);
     }
   };

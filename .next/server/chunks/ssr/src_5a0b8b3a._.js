@@ -214,7 +214,7 @@ const Input = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$
         ...props
     }, void 0, false, {
         fileName: "[project]/src/components/ui/input.tsx",
-        lineNumber: 15,
+        lineNumber: 10,
         columnNumber: 7
     }, this);
 });
@@ -271,7 +271,7 @@ const Textarea = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d
         ...props
     }, void 0, false, {
         fileName: "[project]/src/components/ui/textarea.tsx",
-        lineNumber: 15,
+        lineNumber: 10,
         columnNumber: 7
     }, this);
 });
