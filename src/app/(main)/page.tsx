@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section - Full Screen */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center">
         <div className="absolute inset-0">
           <WaveBackgroundWrapper />
         </div>
