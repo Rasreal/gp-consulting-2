@@ -90,7 +90,8 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
 
       // For solutions, make sure we remove any services field
       if (type === 'solution') {
-        const { services, ...solutionData } = finalData;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const {services, ...solutionData } = finalData;
         finalData = solutionData;
       }
 

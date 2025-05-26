@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
-import { useSolutions, Solution } from "@/hooks/useSolutions";
+import { useSolutions } from "@/hooks/useSolutions";
 
 interface SolutionsGridProps {
   className?: string;

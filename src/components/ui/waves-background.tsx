@@ -261,7 +261,7 @@ export const Waves = forwardRef<WavesRef, WavesProps>(({
         mouse.set = true
       }
     }
-  }), [scrollY])
+  }), [])
 
   // We still need to track scrollY changes to update position calculations
   useEffect(() => {

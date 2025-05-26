@@ -88,12 +88,15 @@ export function useSolutions() {
           console.log('No solutions found, using default data');
           setSolutions(defaultSolutions);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error fetching solutions:', err);
-        setError(err.message || 'Failed to fetch solutions');
-        // Use default data on error
-        setSolutions(defaultSolutions);
-      } finally {
+
+        const message = err instanceof Error ? err.message : 'Failed to fetch solutions';
+
+        setError(message);
+        setSolutions(defaultSolutions); // fallback to default
+      }
+      finally {
         setIsLoading(false);
       }
     }
