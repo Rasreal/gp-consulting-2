@@ -60,95 +60,39 @@ const industries: Omit<Industry, 'id'>[] = [
 
 const solutions: Omit<Solution, 'id'>[] = [
   {
-    title: "Стратегия и консалтинг",
-    description: "Помогаем бизнесу определить направление роста",
-    icon: "Target",
-    services: [
-      "Цифровая стратегия",
-      "Организационная трансформация",
-      "Бизнес-моделирование",
-      "Инновационная стратегия",
-    ],
-    created_at: now,
-    updated_at: now
+    title: "Все типы исследований и подготовка к запуску",
+    description: "Анализ рынка, тестирование идей и формирование стратегии для успешного старта.",
+    image_url: "https://optim.tildacdn.com/tild3738-3933-4763-b231-366238613764/-/cover/720x504/center/center/-/format/webp/man-touching-futuris.jpg.webp",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
-    title: "Разработка продуктов",
-    description: "Создаем продукты, которые решают бизнес-задачи",
-    icon: "Code2",
-    services: [
-      "Разработка MVP",
-      "Цифровые продукты",
-      "SaaS-решения",
-      "Мобильные приложения",
-    ],
-    created_at: now,
-    updated_at: now
+    title: "Бизнес анализ и аудит",
+    description: "Оценка текущего состояния компании, выявление точек роста и оптимизация процессов.",
+    image_url: "https://optim.tildacdn.com/tild6461-3665-4539-a232-326239636562/-/resize/800x1000/-/format/webp/Picture_3.png.webp",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
-    title: "AI и автоматизация",
-    description: "Внедряем искусственный интеллект и автоматизируем процессы",
-    icon: "Brain",
-    services: [
-      "Чат-боты и агенты",
-      "Автоматизация процессов",
-      "Машинное обучение",
-      "Предиктивная аналитика",
-    ],
-    created_at: now,
-    updated_at: now
+    title: "Вывод нового продукта на рынок",
+    description: "От концепции до первых продаж: стратегия, позиционирование и продвижение.",
+    image_url: "https://optim.tildacdn.com/tild3037-6264-4835-b062-626462633766/-/cover/720x504/center/center/-/format/webp/analyst-examines-bus.jpg.webp",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
-    title: "Маркетинг и рост",
-    description: "Помогаем привлекать и удерживать клиентов",
-    icon: "BarChart3",
-    services: [
-      "Стратегия роста",
-      "Маркетинг-автоматизация",
-      "Performance Marketing",
-      "Аналитика и A/B тесты",
-    ],
-    created_at: now,
-    updated_at: now
+    title: "Стратегический консалтинг и развитие",
+    description: "Долгосрочные планы и тактические решения для роста компании.",
+    image_url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
-    title: "IT и цифровизация",
-    description: "Внедряем и оптимизируем IT-системы",
-    icon: "Workflow",
-    services: [
-      "Разработка архитектуры",
-      "Интеграция систем",
-      "Облачная инфраструктура",
-      "Техническая поддержка",
-    ],
-    created_at: now,
-    updated_at: now
-  },
-  {
-    title: "FinOps",
-    description: "Оптимизируем финансовые процессы",
-    icon: "Coins",
-    services: [
-      "Бюджетирование",
-      "Финансовое планирование",
-      "Оптимизация расходов",
-      "Финансовая аналитика",
-    ],
-    created_at: now,
-    updated_at: now
-  },
-  {
-    title: "DevOps",
-    description: "Обеспечиваем быстрое и надежное развертывание",
-    icon: "Code2",
-    services: [
-      "CI/CD",
-      "Инфраструктура как код",
-      "Контейнеризация",
-      "Мониторинг и логирование",
-    ],
-    created_at: now,
-    updated_at: now
+    title: "Инновации и внедрение AI",
+    description: "Внедрение передовых технологий и искусственного интеллекта для повышения эффективности.",
+    image_url: "https://optim.tildacdn.com/tild3932-3161-4063-a462-616433323530/-/cover/720x504/center/center/-/format/webp/Article2.png.webp",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
 ];
 
