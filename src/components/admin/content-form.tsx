@@ -52,6 +52,7 @@ interface ContentFormProps {
 export function ContentForm({ type, initialData, mode }: ContentFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  
   const [formData, setFormData] = useState<FormData>(
     initialData || {
       title: '',
@@ -78,39 +79,61 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
       };
 
       // Format services as array if it's a string (for industry type)
-      if (type === 'industry' && typeof finalData.services === 'string') {
-        finalData = {
-          ...finalData,
-          services: finalData.services
+      if (type === 'industry') {
+        // Remove image_url and value from industry data
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { image_url, value, ...industryData } = finalData;
+        
+        // Process services field
+        let processedServices: string[] = [];
+        if (typeof industryData.services === 'string') {
+          processedServices = industryData.services
             .split(',')
-            .map((s) => s.trim())
-            .filter(Boolean),
+            .map((s: string) => s.trim())
+            .filter(Boolean);
+        } else if (Array.isArray(industryData.services)) {
+          processedServices = industryData.services;
+        }
+
+        finalData = {
+          ...industryData,
+          services: processedServices
         };
       }
 
       // For solutions, make sure we remove any services field
       if (type === 'solution') {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {services, ...solutionData } = finalData;
+        const {services, value, ...solutionData } = finalData;
         finalData = solutionData;
+      }
+
+      // For achievements, remove any non-relevant fields
+      if (type === 'achievement') {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { icon, services, image_url, ...achievementData } = finalData;
+        finalData = achievementData;
       }
 
       if (mode === 'create') {
         const { error } = await supabase
-          .from(type === 'achievement' ? 'achievements' : `${type}s`)
+          .from(type === 'achievement' ? 'achievements' : 
+                type === 'industry' ? 'industries' : `${type}s`)
           .insert([finalData]);
 
         if (error) throw error;
       } else if (initialData?.id) {
         const { error } = await supabase
-          .from(type === 'achievement' ? 'achievements' : `${type}s`)
+          .from(type === 'achievement' ? 'achievements' : 
+                type === 'industry' ? 'industries' : `${type}s`)
           .update(finalData)
           .eq('id', initialData.id);
 
         if (error) throw error;
       }
 
-      router.push(`/admin/${type === 'achievement' ? 'achievements' : `${type}s`}`);
+      router.push(`/admin/${type === 'achievement' ? 'achievements' : 
+                   type === 'industry' ? 'industries' : `${type}s`}`);
       router.refresh();
     } catch (error: unknown) {
       console.error(`Error ${mode === 'create' ? 'creating' : 'updating'} ${type}:`, error);
@@ -127,13 +150,15 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
     setIsLoading(true);
     try {
       const { error } = await supabase
-        .from(type === 'achievement' ? 'achievements' : `${type}s`)
+        .from(type === 'achievement' ? 'achievements' : 
+              type === 'industry' ? 'industries' : `${type}s`)
         .delete()
         .eq('id', initialData.id);
       
       if (error) throw error;
       
-      router.push(`/admin/${type === 'achievement' ? 'achievements' : `${type}s`}`);
+      router.push(`/admin/${type === 'achievement' ? 'achievements' : 
+                   type === 'industry' ? 'industries' : `${type}s`}`);
       router.refresh();
     } catch (error: unknown) {
       console.error('Error deleting content:', error);
@@ -150,7 +175,7 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-sm border">
       {type !== 'achievement' && (
         <>
           <div>
@@ -181,10 +206,10 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
                   value={formData.icon}
                   onValueChange={(value) => setFormData({ ...formData, icon: value })}
                 >
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full bg-white">
                     <SelectValue placeholder="Select an icon" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     {INDUSTRY_ICONS.map((icon) => (
                       <SelectItem key={icon} value={icon}>
                         {icon}
@@ -293,7 +318,8 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
           <Button 
             type="button" 
             variant="outline" 
-            onClick={() => router.push(`/admin/${type === 'achievement' ? 'achievements' : `${type}s`}`)}
+            onClick={() => router.push(`/admin/${type === 'achievement' ? 'achievements' : 
+                                        type === 'industry' ? 'industries' : `${type}s`}`)}
             disabled={isLoading}
           >
             Cancel

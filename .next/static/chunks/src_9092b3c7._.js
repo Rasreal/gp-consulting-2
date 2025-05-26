@@ -360,7 +360,7 @@ class Noise {
         return this.lerp(this.lerp(n00, n10, u), this.lerp(n01, n11, u), this.fade(y));
     }
 }
-function Waves({ lineColor = "hsl(var(--foreground))", backgroundColor = "transparent", waveSpeedX = 0.0125, waveSpeedY = 0.005, waveAmpX = 32, waveAmpY = 16, xGap = 10, yGap = 32, friction = 0.925, tension = 0.005, maxCursorMove = 100, className }) {
+const Waves = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"])(_c = _s(({ lineColor = "hsl(var(--foreground))", backgroundColor = "transparent", waveSpeedX = 0.0125, waveSpeedY = 0.005, waveAmpX = 32, waveAmpY = 16, xGap = 10, yGap = 32, friction = 0.925, tension = 0.005, maxCursorMove = 100, className, scrollY = 0 }, ref)=>{
     _s();
     const containerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const canvasRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -373,6 +373,68 @@ function Waves({ lineColor = "hsl(var(--foreground))", backgroundColor = "transp
     });
     const noiseRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(new Noise(Math.random()));
     const linesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])([]);
+    const ripplesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])([]);
+    const animationIdRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    // Helper function to safely convert colors
+    const safeColorWithOpacity = (baseColor, opacity)=>{
+        // Handle HSL format
+        if (baseColor.startsWith('hsl')) {
+            // Check if it's already hsla
+            if (baseColor.startsWith('hsla')) {
+                // Replace the existing alpha
+                return baseColor.replace(/,\s*[\d.]+\)$/, `, ${opacity})`);
+            }
+            // Convert hsl to hsla
+            return baseColor.replace('hsl(', 'hsla(').replace(')', `, ${opacity})`);
+        }
+        // Handle RGB format
+        if (baseColor.startsWith('rgb')) {
+            // Check if it's already rgba
+            if (baseColor.startsWith('rgba')) {
+                // Replace the existing alpha
+                return baseColor.replace(/,\s*[\d.]+\)$/, `, ${opacity})`);
+            }
+            // Convert rgb to rgba
+            return baseColor.replace('rgb(', 'rgba(').replace(')', `, ${opacity})`);
+        }
+        // Handle hex format
+        if (baseColor.startsWith('#')) {
+            const r = parseInt(baseColor.slice(1, 3), 16);
+            const g = parseInt(baseColor.slice(3, 5), 16);
+            const b = parseInt(baseColor.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+        }
+        // Fallback
+        return `rgba(0, 0, 0, ${opacity})`;
+    };
+    // Store parameters in refs to avoid useEffect dependency issues
+    const paramsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])({
+        lineColor,
+        backgroundColor,
+        waveSpeedX,
+        waveSpeedY,
+        waveAmpX,
+        waveAmpY,
+        xGap,
+        yGap,
+        friction,
+        tension,
+        maxCursorMove
+    });
+    // Update params ref when props change
+    paramsRef.current = {
+        lineColor,
+        backgroundColor,
+        waveSpeedX,
+        waveSpeedY,
+        waveAmpX,
+        waveAmpY,
+        xGap,
+        yGap,
+        friction,
+        tension,
+        maxCursorMove
+    };
     const mouseRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])({
         x: -10,
         y: 0,
@@ -383,8 +445,41 @@ function Waves({ lineColor = "hsl(var(--foreground))", backgroundColor = "transp
         v: 0,
         vs: 0,
         a: 0,
-        set: false
+        set: false,
+        lastRippleTime: 0
     });
+    // Expose updateMouse method to parent
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useImperativeHandle"])(ref, {
+        "Waves.useImperativeHandle": ()=>({
+                updateMouse: ({
+                    "Waves.useImperativeHandle": (x, y)=>{
+                        const mouse = mouseRef.current;
+                        const b = boundingRef.current;
+                        // x and y are now page coordinates (pageX/pageY)
+                        // We need to subtract document scroll position from boundingRect
+                        mouse.x = x - b.left;
+                        mouse.y = y - (b.top + window.scrollY);
+                        if (!mouse.set) {
+                            mouse.sx = mouse.x;
+                            mouse.sy = mouse.y;
+                            mouse.lx = mouse.x;
+                            mouse.ly = mouse.y;
+                            mouse.set = true;
+                        }
+                    }
+                })["Waves.useImperativeHandle"]
+            })
+    }["Waves.useImperativeHandle"], []);
+    // We still need to track scrollY changes to update position calculations
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Waves.useEffect": ()=>{
+            prevScrollYRef.current = scrollY;
+        }
+    }["Waves.useEffect"], [
+        scrollY
+    ]);
+    // Reference to track previous scroll position
+    const prevScrollYRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(scrollY);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Waves.useEffect": ()=>{
             const canvas = canvasRef.current;
@@ -401,6 +496,7 @@ function Waves({ lineColor = "hsl(var(--foreground))", backgroundColor = "transp
             }
             function setLines() {
                 const { width, height } = boundingRef.current;
+                const { xGap, yGap } = paramsRef.current;
                 linesRef.current = [];
                 const oWidth = width + 200, oHeight = height + 30;
                 const totalLines = Math.ceil(oWidth / xGap);
@@ -422,47 +518,148 @@ function Waves({ lineColor = "hsl(var(--foreground))", backgroundColor = "transp
                                 y: 0,
                                 vx: 0,
                                 vy: 0
+                            },
+                            ripple: {
+                                intensity: 0,
+                                phase: 0
+                            },
+                            parallax: {
+                                x: 0,
+                                y: 0,
+                                depth: Math.random() * 0.5 + 0.5
                             }
                         });
                     }
                     linesRef.current.push(pts);
                 }
             }
+            function createRipple(x, y, intensity = 1) {
+                ripplesRef.current.push({
+                    x,
+                    y,
+                    radius: 0,
+                    intensity,
+                    startTime: Date.now(),
+                    duration: 2000
+                });
+                // Limit number of ripples for performance
+                if (ripplesRef.current.length > 5) {
+                    ripplesRef.current.shift();
+                }
+            }
+            function updateRipples() {
+                const currentTime = Date.now();
+                ripplesRef.current = ripplesRef.current.filter({
+                    "Waves.useEffect.updateRipples": (ripple)=>{
+                        const elapsed = currentTime - ripple.startTime;
+                        if (elapsed > ripple.duration) return false;
+                        const progress = elapsed / ripple.duration;
+                        ripple.radius = progress * 300 // Max ripple radius
+                        ;
+                        ripple.intensity = (1 - progress) * ripple.intensity;
+                        return true;
+                    }
+                }["Waves.useEffect.updateRipples"]);
+            }
             function movePoints(time) {
                 const lines = linesRef.current;
                 const mouse = mouseRef.current;
                 const noise = noiseRef.current;
+                const { waveSpeedX, waveSpeedY, waveAmpX, waveAmpY, friction, tension, maxCursorMove } = paramsRef.current;
                 lines.forEach({
                     "Waves.useEffect.movePoints": (pts)=>{
                         pts.forEach({
                             "Waves.useEffect.movePoints": (p)=>{
-                                const move = noise.perlin2((p.x + time * waveSpeedX) * 0.002, (p.y + time * waveSpeedY) * 0.0015) * 12;
-                                p.wave.x = Math.cos(move) * waveAmpX;
-                                p.wave.y = Math.sin(move) * waveAmpY;
+                                // Enhanced multi-octave noise for smoother, more organic movement
+                                // Base octave - large, slow movements
+                                const baseMove = noise.perlin2((p.x + time * waveSpeedX) * 0.0015, (p.y + time * waveSpeedY) * 0.001);
+                                // Second octave - medium detail movements
+                                const detailMove = noise.perlin2((p.x + time * waveSpeedX * 1.7) * 0.004, (p.y + time * waveSpeedY * 1.7) * 0.003) * 0.35 // Increased from 0.3 for more influence
+                                ;
+                                // Third octave - fine detail movements
+                                const fineMove = noise.perlin2((p.x + time * waveSpeedX * 3.5) * 0.008, (p.y + time * waveSpeedY * 3.5) * 0.007) * 0.15 // Increased from 0.1 for more visible fine detail
+                                ;
+                                // Fourth octave - very fine micro movements for extra smoothness
+                                const microMove = noise.perlin2((p.x + time * waveSpeedX * 6) * 0.015, (p.y + time * waveSpeedY * 6) * 0.014) * 0.05;
+                                // Combine all octaves with weighted influence for a rich, natural movement
+                                const combinedMove = (baseMove + detailMove + fineMove + microMove) * 9 // Increased multiplier for more pronounced effect
+                                ;
+                                // Enhanced wave motion with multiple harmonics for smoother transitions
+                                p.wave.x = Math.cos(combinedMove) * waveAmpX * 0.85 + Math.sin(combinedMove * 1.3) * waveAmpX * 0.3 + Math.cos(combinedMove * 2.1) * waveAmpX * 0.1;
+                                p.wave.y = Math.sin(combinedMove) * waveAmpY * 0.85 + Math.cos(combinedMove * 1.2) * waveAmpY * 0.25 + Math.sin(combinedMove * 1.9) * waveAmpY * 0.1;
+                                // Enhanced parallax effect with smoother response
+                                const parallaxFactor = p.parallax.depth;
+                                p.parallax.x = (mouse.sx - boundingRef.current.width / 2) * parallaxFactor * 0.018;
+                                p.parallax.y = (mouse.sy - boundingRef.current.height / 2) * parallaxFactor * 0.012;
+                                // Enhanced cursor interaction with smoother falloff
                                 const dx = p.x - mouse.sx, dy = p.y - mouse.sy;
-                                const dist = Math.hypot(dx, dy), l = Math.max(175, mouse.vs);
-                                if (dist < l) {
-                                    const s = 1 - dist / l;
-                                    const f = Math.cos(dist * 0.001) * s;
-                                    p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00065;
-                                    p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00065;
+                                const dist = Math.hypot(dx, dy);
+                                const influenceRadius = Math.max(70, mouse.vs * 0.2) // Reduced for more focused effect
+                                ;
+                                if (dist < influenceRadius) {
+                                    const s = 1 - dist / influenceRadius;
+                                    // Improved smoothing function for more natural falloff
+                                    const smoothFalloff = s * s * s * (s * (s * 6 - 15) + 10) // Using smoother cubic interpolation
+                                    ;
+                                    const directionForce = Math.cos(dist * 0.01) * smoothFalloff * 0.65 // Reduced for subtler effect
+                                    ;
+                                    const velocityMultiplier = Math.min(mouse.vs * 0.0008, 0.4) // Reduced for more controlled effect
+                                    ;
+                                    p.cursor.vx += Math.cos(mouse.a) * directionForce * influenceRadius * velocityMultiplier;
+                                    p.cursor.vy += Math.sin(mouse.a) * directionForce * influenceRadius * velocityMultiplier;
                                 }
-                                p.cursor.vx += (0 - p.cursor.x) * tension;
-                                p.cursor.vy += (0 - p.cursor.y) * tension;
+                                // Ripple effects with smoother propagation
+                                p.ripple.intensity = 0;
+                                ripplesRef.current.forEach({
+                                    "Waves.useEffect.movePoints": (ripple)=>{
+                                        const rippleDist = Math.hypot(p.x - ripple.x, p.y - ripple.y);
+                                        if (rippleDist < ripple.radius + 60) {
+                                            // Smoother ripple wave function with controlled fade-out
+                                            const phase = (rippleDist - ripple.radius) * 0.08 // Reduced from 0.1 for gentler waves
+                                            ;
+                                            const rippleEffect = Math.sin(phase) * ripple.intensity * Math.exp(-phase * 0.2);
+                                            p.ripple.intensity += rippleEffect * 0.45 // Reduced from 0.5 for subtler effect
+                                            ;
+                                        }
+                                    }
+                                }["Waves.useEffect.movePoints"]);
+                                // Enhanced physics with improved spring system and smoother response
+                                const enhancedTension = tension * (1 + Math.abs(p.cursor.x + p.cursor.y) * 0.0008) // Reduced from 0.001
+                                ;
+                                p.cursor.vx += (0 - p.cursor.x) * enhancedTension;
+                                p.cursor.vy += (0 - p.cursor.y) * enhancedTension;
                                 p.cursor.vx *= friction;
                                 p.cursor.vy *= friction;
-                                p.cursor.x += p.cursor.vx * 2;
-                                p.cursor.y += p.cursor.vy * 2;
-                                p.cursor.x = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.x));
-                                p.cursor.y = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.y));
+                                p.cursor.x += p.cursor.vx * 2.2 // Reduced from 2.5 for smoother motion
+                                ;
+                                p.cursor.y += p.cursor.vy * 2.2 // Reduced from 2.5 for smoother motion
+                                ;
+                                // Apply ripple effects to cursor movement with improved smoothing
+                                p.cursor.x += p.ripple.intensity * 8 // Reduced from 10 for subtler effect
+                                ;
+                                p.cursor.y += p.ripple.intensity * 6 // Reduced from 8 for subtler effect
+                                ;
+                                // Limit maximum cursor influence with smoother clamping
+                                p.cursor.x = Math.min(maxCursorMove * 1.1, Math.max(-maxCursorMove * 1.1, p.cursor.x) // Reduced from 1.2 for more controlled motion
+                                );
+                                p.cursor.y = Math.min(maxCursorMove * 1.1, Math.max(-maxCursorMove * 1.1, p.cursor.y) // Reduced from 1.2 for more controlled motion
+                                );
                             }
                         }["Waves.useEffect.movePoints"]);
                     }
                 }["Waves.useEffect.movePoints"]);
             }
-            function moved(point, withCursor = true) {
-                const x = point.x + point.wave.x + (withCursor ? point.cursor.x : 0);
-                const y = point.y + point.wave.y + (withCursor ? point.cursor.y : 0);
+            function moved(point, withCursor = true, withParallax = true) {
+                let x = point.x + point.wave.x;
+                let y = point.y + point.wave.y;
+                if (withCursor) {
+                    x += point.cursor.x;
+                    y += point.cursor.y;
+                }
+                if (withParallax) {
+                    x += point.parallax.x;
+                    y += point.parallax.y;
+                }
                 return {
                     x: Math.round(x * 10) / 10,
                     y: Math.round(y * 10) / 10
@@ -470,139 +667,222 @@ function Waves({ lineColor = "hsl(var(--foreground))", backgroundColor = "transp
             }
             function drawLines() {
                 const { width, height } = boundingRef.current;
+                const { lineColor } = paramsRef.current;
                 const ctx = ctxRef.current;
                 if (!ctx) return;
                 ctx.clearRect(0, 0, width, height);
+                // Draw main wave lines with enhanced rendering
                 ctx.beginPath();
                 ctx.strokeStyle = lineColor;
+                ctx.lineWidth = 0.8 // Reduced from 0.9 for more delicate lines
+                ;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
                 linesRef.current.forEach({
                     "Waves.useEffect.drawLines": (points)=>{
-                        let p1 = moved(points[0], false);
-                        ctx.moveTo(p1.x, p1.y);
-                        points.forEach({
-                            "Waves.useEffect.drawLines": (p, idx)=>{
-                                const isLast = idx === points.length - 1;
-                                p1 = moved(p, !isLast);
-                                const p2 = moved(points[idx + 1] || points[points.length - 1], !isLast);
-                                ctx.lineTo(p1.x, p1.y);
-                                if (isLast) ctx.moveTo(p2.x, p2.y);
+                        if (points.length < 2) return;
+                        const movedPoints = points.map({
+                            "Waves.useEffect.drawLines.movedPoints": (p)=>moved(p, true, true)
+                        }["Waves.useEffect.drawLines.movedPoints"]);
+                        // Start the path
+                        ctx.moveTo(movedPoints[0].x, movedPoints[0].y);
+                        if (movedPoints.length === 2) {
+                            ctx.lineTo(movedPoints[1].x, movedPoints[1].y);
+                        } else {
+                            // Enhanced smooth curves with cardinal spline interpolation for smoother results
+                            for(let i = 0; i < movedPoints.length - 1; i++){
+                                const p0 = movedPoints[Math.max(0, i - 1)];
+                                const p1 = movedPoints[i];
+                                const p2 = movedPoints[i + 1];
+                                const p3 = movedPoints[Math.min(movedPoints.length - 1, i + 2)];
+                                // Calculate tension factor based on distance for adaptive smoothing
+                                const segmentLength = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+                                const tensionFactor = Math.min(0.25, 8 / (segmentLength + 0.1));
+                                // Calculate control points for smoother curve segments
+                                // Using a modified Cardinal spline with tension
+                                const cp1x = p1.x + (p2.x - p0.x) * tensionFactor;
+                                const cp1y = p1.y + (p2.y - p0.y) * tensionFactor;
+                                const cp2x = p2.x - (p3.x - p1.x) * tensionFactor;
+                                const cp2y = p2.y - (p3.y - p1.y) * tensionFactor;
+                                // Use a bezier curve for smoother segments
+                                if (i === 0) {
+                                    // For first segment, just use one control point
+                                    ctx.quadraticCurveTo(cp1x, cp1y, p2.x, p2.y);
+                                } else {
+                                    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+                                }
                             }
-                        }["Waves.useEffect.drawLines"]);
+                        }
                     }
                 }["Waves.useEffect.drawLines"]);
                 ctx.stroke();
+                // Draw subtle glow effect around cursor with improved gradient
+                const mouse = mouseRef.current;
+                if (mouse.set && mouse.vs > 4) {
+                    // Create a larger, subtler gradient for smoother appearance
+                    const glowRadius = Math.min(25, 5 + mouse.vs * 0.08) // Dynamic radius based on velocity
+                    ;
+                    const gradient = ctx.createRadialGradient(mouse.sx, mouse.sy, 0, mouse.sx, mouse.sy, glowRadius);
+                    gradient.addColorStop(0, safeColorWithOpacity(lineColor, 0.025)) // Reduced opacity for subtlety
+                    ;
+                    gradient.addColorStop(0.7, safeColorWithOpacity(lineColor, 0.01));
+                    gradient.addColorStop(1, safeColorWithOpacity(lineColor, 0));
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(mouse.sx - glowRadius, mouse.sy - glowRadius, glowRadius * 2, glowRadius * 2);
+                }
+                // Draw ripple effects with enhanced appearance
+                ripplesRef.current.forEach({
+                    "Waves.useEffect.drawLines": (ripple)=>{
+                        if (ripple.intensity > 0.08) {
+                            // Draw multiple concentric ripples for richer effect
+                            for(let i = 0; i < 2; i++){
+                                const rippleRadius = ripple.radius - i * 8;
+                                if (rippleRadius > 0) {
+                                    ctx.beginPath();
+                                    ctx.arc(ripple.x, ripple.y, rippleRadius, 0, Math.PI * 2);
+                                    // Vary opacity based on ripple phase for more organic look
+                                    const opacity = ripple.intensity * (0.2 - i * 0.07) * (1 - rippleRadius / (ripple.radius + 50));
+                                    ctx.strokeStyle = safeColorWithOpacity(lineColor, opacity);
+                                    ctx.lineWidth = 1.2 - i * 0.3 // Thinner outer rings
+                                    ;
+                                    ctx.stroke();
+                                }
+                            }
+                        }
+                    }
+                }["Waves.useEffect.drawLines"]);
             }
             function tick(t) {
                 const mouse = mouseRef.current;
-                mouse.sx += (mouse.x - mouse.sx) * 0.1;
-                mouse.sy += (mouse.y - mouse.sy) * 0.1;
+                const currentTime = Date.now();
+                // Enhanced mouse smoothing with adaptive responsiveness - make it more responsive
+                const smoothingFactor = 0.1 + mouse.vs * 0.0008 // Increased from 0.06 to 0.1 for less delay
+                ;
+                mouse.sx += (mouse.x - mouse.sx) * smoothingFactor;
+                mouse.sy += (mouse.y - mouse.sy) * smoothingFactor;
                 const dx = mouse.x - mouse.lx, dy = mouse.y - mouse.ly;
                 const d = Math.hypot(dx, dy);
                 mouse.v = d;
-                mouse.vs += (d - mouse.vs) * 0.1;
-                mouse.vs = Math.min(100, mouse.vs);
+                mouse.vs += (d - mouse.vs) * 0.15 // Increased from 0.12 to 0.15 for quicker velocity response
+                ;
+                mouse.vs = Math.min(80, mouse.vs);
                 mouse.lx = mouse.x;
                 mouse.ly = mouse.y;
                 mouse.a = Math.atan2(dy, dx);
+                // Create ripples on significant mouse movement - less frequent and less intense
+                if (mouse.vs > 20 && currentTime - mouse.lastRippleTime > 300) {
+                    createRipple(mouse.sx, mouse.sy, mouse.vs * 0.015) // Reduced intensity from 0.02 to 0.015
+                    ;
+                    mouse.lastRippleTime = currentTime;
+                }
                 if (container) {
                     container.style.setProperty("--x", `${mouse.sx}px`);
                     container.style.setProperty("--y", `${mouse.sy}px`);
+                    container.style.setProperty("--velocity", `${mouse.vs}`);
                 }
+                updateRipples();
                 movePoints(t);
                 drawLines();
-                requestAnimationFrame(tick);
+                // Store animation ID for cleanup
+                animationIdRef.current = requestAnimationFrame(tick);
             }
             function onResize() {
                 setSize();
                 setLines();
             }
-            function onMouseMove(e) {
-                updateMouse(e.pageX, e.pageY);
-            }
-            function onTouchMove(e) {
-                e.preventDefault();
-                const touch = e.touches[0];
-                updateMouse(touch.clientX, touch.clientY);
-            }
-            function updateMouse(x, y) {
-                const mouse = mouseRef.current;
-                const b = boundingRef.current;
-                mouse.x = x - b.left;
-                mouse.y = y - b.top + window.scrollY;
-                if (!mouse.set) {
-                    mouse.sx = mouse.x;
-                    mouse.sy = mouse.y;
-                    mouse.lx = mouse.x;
-                    mouse.ly = mouse.y;
-                    mouse.set = true;
-                }
-            }
             setSize();
             setLines();
-            requestAnimationFrame(tick);
+            // Start the animation loop
+            animationIdRef.current = requestAnimationFrame(tick);
             window.addEventListener("resize", onResize);
-            window.addEventListener("mousemove", onMouseMove);
-            window.addEventListener("touchmove", onTouchMove, {
-                passive: false
-            });
             return ({
                 "Waves.useEffect": ()=>{
                     window.removeEventListener("resize", onResize);
-                    window.removeEventListener("mousemove", onMouseMove);
-                    window.removeEventListener("touchmove", onTouchMove);
+                    // Clean up animation frame
+                    if (animationIdRef.current) {
+                        cancelAnimationFrame(animationIdRef.current);
+                    }
                 }
             })["Waves.useEffect"];
         }
-    }["Waves.useEffect"], [
-        lineColor,
-        backgroundColor,
-        waveSpeedX,
-        waveSpeedY,
-        waveAmpX,
-        waveAmpY,
-        friction,
-        tension,
-        maxCursorMove,
-        xGap,
-        yGap
-    ]);
+    }["Waves.useEffect"], []) // Empty dependency array to prevent restarts
+    ;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         ref: containerRef,
         style: {
-            backgroundColor
+            backgroundColor,
+            pointerEvents: 'none',
+            zIndex: -10
         },
         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute top-0 left-0 w-full h-full overflow-hidden", className),
+        onMouseMove: (e)=>{
+            const mouse = mouseRef.current;
+            const b = boundingRef.current;
+            // Convert clientX/Y to be consistent with our page coordinate system
+            mouse.x = e.clientX - b.left;
+            mouse.y = e.clientY - b.top;
+            if (!mouse.set) {
+                mouse.sx = mouse.x;
+                mouse.sy = mouse.y;
+                mouse.lx = mouse.x;
+                mouse.ly = mouse.y;
+                mouse.set = true;
+            }
+        },
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute top-0 left-0 rounded-full", "w-2 h-2 bg-foreground/10"),
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute top-0 left-0 rounded-full pointer-events-none", "bg-foreground/10 transition-all duration-100 ease-out"),
                 style: {
+                    width: `calc(2px + var(--velocity, 0) * 0.01px)`,
+                    height: `calc(2px + var(--velocity, 0) * 0.01px)`,
                     transform: "translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0)",
-                    willChange: "transform"
+                    willChange: "transform, width, height",
+                    boxShadow: `0 0 calc(2px + var(--velocity, 0) * 0.03px) rgba(var(--foreground), 0.05)`,
+                    zIndex: -5
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/waves-background.tsx",
-                lineNumber: 368,
+                lineNumber: 652,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "absolute top-0 left-0 rounded-full pointer-events-none opacity-100",
+                style: {
+                    width: "0px",
+                    height: "0px",
+                    background: `radial-gradient(circle, ${safeColorWithOpacity(lineColor, 0.01)} 0%, transparent 70%)`,
+                    transform: "translate3d(calc(var(--x) - 4px), calc(var(--y) - 4px), 0)",
+                    willChange: "transform",
+                    zIndex: -5
+                }
+            }, void 0, false, {
+                fileName: "[project]/src/components/ui/waves-background.tsx",
+                lineNumber: 668,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("canvas", {
                 ref: canvasRef,
-                className: "block w-full h-full"
+                className: "block w-full h-full",
+                style: {
+                    zIndex: -15
+                }
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/waves-background.tsx",
-                lineNumber: 379,
+                lineNumber: 680,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ui/waves-background.tsx",
-        lineNumber: 358,
+        lineNumber: 623,
         columnNumber: 5
     }, this);
-}
-_s(Waves, "ya4SNESt3FO1CdLfrDAkg6O4/4s=");
-_c = Waves;
-var _c;
-__turbopack_context__.k.register(_c, "Waves");
+}, "9glVLrE68LDwMdG49J0UdE1Wqe4=")), "9glVLrE68LDwMdG49J0UdE1Wqe4=");
+_c1 = Waves;
+Waves.displayName = "Waves";
+var _c, _c1;
+__turbopack_context__.k.register(_c, "Waves$forwardRef");
+__turbopack_context__.k.register(_c1, "Waves");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
@@ -618,71 +898,143 @@ __turbopack_context__.s({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$themes$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-themes/dist/index.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$waves$2d$background$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/waves-background.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
+;
 function WaveBackgroundWrapper() {
     _s();
     const { theme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$themes$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"])();
+    const waveRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const [scrollY, setScrollY] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "WaveBackgroundWrapper.useEffect": ()=>{
+            // Track scroll position
+            const handleScroll = {
+                "WaveBackgroundWrapper.useEffect.handleScroll": ()=>{
+                    setScrollY(window.scrollY);
+                }
+            }["WaveBackgroundWrapper.useEffect.handleScroll"];
+            const handleMouseMove = {
+                "WaveBackgroundWrapper.useEffect.handleMouseMove": (e)=>{
+                    if (waveRef.current && waveRef.current.updateMouse) {
+                        // Use pageY which already accounts for scrolling
+                        waveRef.current.updateMouse(e.pageX, e.pageY);
+                    }
+                }
+            }["WaveBackgroundWrapper.useEffect.handleMouseMove"];
+            const handleTouchMove = {
+                "WaveBackgroundWrapper.useEffect.handleTouchMove": (e)=>{
+                    if (waveRef.current && waveRef.current.updateMouse && e.touches[0]) {
+                        // Use pageY which already accounts for scrolling
+                        waveRef.current.updateMouse(e.touches[0].pageX, e.touches[0].pageY);
+                    }
+                }
+            }["WaveBackgroundWrapper.useEffect.handleTouchMove"];
+            window.addEventListener('scroll', handleScroll, {
+                passive: true
+            });
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('touchmove', handleTouchMove, {
+                passive: true
+            });
+            // Initial scroll position
+            setScrollY(window.scrollY);
+            return ({
+                "WaveBackgroundWrapper.useEffect": ()=>{
+                    window.removeEventListener('scroll', handleScroll);
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('touchmove', handleTouchMove);
+                }
+            })["WaveBackgroundWrapper.useEffect"];
+        }
+    }["WaveBackgroundWrapper.useEffect"], []);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed inset-0 -z-10 pointer-events-none",
+        className: "fixed inset-0 -z-20 pointer-events-none",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$waves$2d$background$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Waves"], {
-                lineColor: theme === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.15)",
+                ref: waveRef,
+                lineColor: theme === "dark" ? "rgba(255, 255, 255, 0.18)" : "rgba(0, 0, 0, 0.15)",
                 backgroundColor: "transparent",
-                waveSpeedX: 0.02,
-                waveSpeedY: 0.01,
-                waveAmpX: 20,
-                waveAmpY: 10,
-                friction: 0.99,
-                tension: 0.005,
-                maxCursorMove: 0,
-                xGap: 22,
-                yGap: 48
+                waveSpeedX: 0.015,
+                waveSpeedY: 0.008,
+                waveAmpX: 24,
+                waveAmpY: 16,
+                friction: 0.94,
+                tension: 0.01,
+                maxCursorMove: 120,
+                xGap: 32,
+                yGap: 60,
+                scrollY: scrollY,
+                className: "pointer-events-none"
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
-                lineNumber: 11,
+                lineNumber: 52,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gp-light/30"
-            }, void 0, false, {
-                fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
-                lineNumber: 26,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute w-24 h-24 rounded-full bg-gp-accent/5 blur-xl",
+                className: "absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gp-light/15 pointer-events-none",
                 style: {
-                    top: '15%',
-                    left: '20%'
+                    zIndex: -15
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
-                lineNumber: 29,
+                lineNumber: 70,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute w-32 h-32 rounded-full bg-gp-accent/5 blur-xl",
+                className: "absolute w-32 h-32 rounded-full bg-gp-accent/8 blur-2xl transition-all duration-1000 ease-out pointer-events-none",
                 style: {
-                    bottom: '25%',
-                    right: '15%'
+                    top: `calc(12% + ${scrollY * 0.05}px)`,
+                    left: '18%',
+                    transform: 'translate(calc(var(--x, 0px) * -0.02), calc(var(--y, 0px) * -0.015))',
+                    willChange: 'transform',
+                    zIndex: -15
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
-                lineNumber: 34,
+                lineNumber: 73,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "absolute w-40 h-40 rounded-full bg-gp-accent/6 blur-3xl transition-all duration-1200 ease-out pointer-events-none",
+                style: {
+                    bottom: `calc(20% + ${scrollY * 0.03}px)`,
+                    right: '12%',
+                    transform: 'translate(calc(var(--x, 0px) * 0.015), calc(var(--y, 0px) * 0.02))',
+                    willChange: 'transform',
+                    zIndex: -15
+                }
+            }, void 0, false, {
+                fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
+                lineNumber: 84,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "absolute w-24 h-24 rounded-full bg-gp-accent/10 blur-xl transition-all duration-800 ease-out pointer-events-none",
+                style: {
+                    top: `calc(60% + ${scrollY * 0.08}px)`,
+                    left: '70%',
+                    transform: 'translate(calc(var(--x, 0px) * -0.025), calc(var(--y, 0px) * 0.018))',
+                    willChange: 'transform',
+                    zIndex: -15
+                }
+            }, void 0, false, {
+                fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
+                lineNumber: 95,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
-        lineNumber: 10,
+        lineNumber: 51,
         columnNumber: 5
     }, this);
 }
-_s(WaveBackgroundWrapper, "JkSxfi8+JQlqgIgDOc3wQN+nVIw=", false, function() {
+_s(WaveBackgroundWrapper, "1rX1kx7pxjR3rOh7b65sEnxzc8U=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$themes$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"]
     ];

@@ -51,7 +51,7 @@ export default function EditSolutionPage() {
   }
 
   return (
-    <div>
+    <div className="p-6">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Редактировать решение</h1>
       <div className="max-w-2xl">
         <ContentForm type="solution" mode="edit" initialData={solution} />

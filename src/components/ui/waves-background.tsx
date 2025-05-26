@@ -351,77 +351,98 @@ export const Waves = forwardRef<WavesRef, WavesProps>(({
       
       lines.forEach((pts) => {
         pts.forEach((p: WavePoint) => {
-          // Enhanced multi-octave noise for more organic movement
+          // Enhanced multi-octave noise for smoother, more organic movement
+          // Base octave - large, slow movements
           const baseMove = noise.perlin2(
-            (p.x + time * waveSpeedX) * 0.002,
-            (p.y + time * waveSpeedY) * 0.0015,
+            (p.x + time * waveSpeedX) * 0.0015,  // Reduced from 0.002 for smoother motion
+            (p.y + time * waveSpeedY) * 0.001,   // Reduced from 0.0015 for smoother motion
           )
+          
+          // Second octave - medium detail movements
           const detailMove = noise.perlin2(
-            (p.x + time * waveSpeedX * 2) * 0.005,
-            (p.y + time * waveSpeedY * 2) * 0.004,
-          ) * 0.3
+            (p.x + time * waveSpeedX * 1.7) * 0.004,  // Adjusted frequency
+            (p.y + time * waveSpeedY * 1.7) * 0.003,  // Adjusted frequency
+          ) * 0.35  // Increased from 0.3 for more influence
+          
+          // Third octave - fine detail movements
           const fineMove = noise.perlin2(
-            (p.x + time * waveSpeedX * 4) * 0.01,
-            (p.y + time * waveSpeedY * 4) * 0.008,
-          ) * 0.1
+            (p.x + time * waveSpeedX * 3.5) * 0.008,  // Reduced from 4x to 3.5x for smoother transition
+            (p.y + time * waveSpeedY * 3.5) * 0.007,  // Reduced from 4x to 3.5x for smoother transition
+          ) * 0.15  // Increased from 0.1 for more visible fine detail
           
-          const combinedMove = (baseMove + detailMove + fineMove) * 8
+          // Fourth octave - very fine micro movements for extra smoothness
+          const microMove = noise.perlin2(
+            (p.x + time * waveSpeedX * 6) * 0.015,
+            (p.y + time * waveSpeedY * 6) * 0.014,
+          ) * 0.05
           
-          // Enhanced wave motion with multiple harmonics
-          p.wave.x = Math.cos(combinedMove) * waveAmpX + Math.sin(combinedMove * 1.5) * waveAmpX * 0.3
-          p.wave.y = Math.sin(combinedMove) * waveAmpY + Math.cos(combinedMove * 1.2) * waveAmpY * 0.2
+          // Combine all octaves with weighted influence for a rich, natural movement
+          const combinedMove = (baseMove + detailMove + fineMove + microMove) * 9  // Increased multiplier for more pronounced effect
+          
+          // Enhanced wave motion with multiple harmonics for smoother transitions
+          p.wave.x = Math.cos(combinedMove) * waveAmpX * 0.85 + 
+                     Math.sin(combinedMove * 1.3) * waveAmpX * 0.3 + 
+                     Math.cos(combinedMove * 2.1) * waveAmpX * 0.1
+                     
+          p.wave.y = Math.sin(combinedMove) * waveAmpY * 0.85 + 
+                     Math.cos(combinedMove * 1.2) * waveAmpY * 0.25 + 
+                     Math.sin(combinedMove * 1.9) * waveAmpY * 0.1
 
-          // Enhanced parallax effect
+          // Enhanced parallax effect with smoother response
           const parallaxFactor = p.parallax.depth
-          p.parallax.x = (mouse.sx - boundingRef.current.width / 2) * parallaxFactor * 0.02
-          p.parallax.y = (mouse.sy - boundingRef.current.height / 2) * parallaxFactor * 0.015
+          p.parallax.x = (mouse.sx - boundingRef.current.width / 2) * parallaxFactor * 0.018
+          p.parallax.y = (mouse.sy - boundingRef.current.height / 2) * parallaxFactor * 0.012
 
-          // Enhanced cursor interaction with smoother falloff - decreased radius and smoother effect
+          // Enhanced cursor interaction with smoother falloff
           const dx = p.x - mouse.sx,
             dy = p.y - mouse.sy
           const dist = Math.hypot(dx, dy)
-          const influenceRadius = Math.max(80, mouse.vs * 0.2) // Reduced from 100 to 80
+          const influenceRadius = Math.max(70, mouse.vs * 0.2) // Reduced for more focused effect
           
           if (dist < influenceRadius) {
             const s = 1 - (dist / influenceRadius)
-            const smoothFalloff = s * s * (3 - 2 * s) // Simplified back to smooth step for gentler effect
-            const directionForce = Math.cos(dist * 0.01) * smoothFalloff * 0.7 // Added 0.7 multiplier to reduce effect strength
-            const velocityMultiplier = Math.min(mouse.vs * 0.001, 0.5) // Reduced from 0.0015 to 0.001 and from 1 to 0.5
+            // Improved smoothing function for more natural falloff
+            const smoothFalloff = s * s * s * (s * (s * 6 - 15) + 10) // Using smoother cubic interpolation
+            const directionForce = Math.cos(dist * 0.01) * smoothFalloff * 0.65 // Reduced for subtler effect
+            const velocityMultiplier = Math.min(mouse.vs * 0.0008, 0.4) // Reduced for more controlled effect
             
             p.cursor.vx += Math.cos(mouse.a) * directionForce * influenceRadius * velocityMultiplier
             p.cursor.vy += Math.sin(mouse.a) * directionForce * influenceRadius * velocityMultiplier
           }
 
-          // Ripple effects
+          // Ripple effects with smoother propagation
           p.ripple.intensity = 0
           ripplesRef.current.forEach(ripple => {
             const rippleDist = Math.hypot(p.x - ripple.x, p.y - ripple.y)
-            if (rippleDist < ripple.radius + 50) {
-              const rippleEffect = Math.sin((rippleDist - ripple.radius) * 0.1) * ripple.intensity
-              p.ripple.intensity += rippleEffect * 0.5
+            if (rippleDist < ripple.radius + 60) { // Increased from 50 to 60 for wider ripple effect
+              // Smoother ripple wave function with controlled fade-out
+              const phase = (rippleDist - ripple.radius) * 0.08 // Reduced from 0.1 for gentler waves
+              const rippleEffect = Math.sin(phase) * ripple.intensity * Math.exp(-phase * 0.2)
+              p.ripple.intensity += rippleEffect * 0.45 // Reduced from 0.5 for subtler effect
             }
           })
 
-          // Enhanced physics with improved spring system
-          const enhancedTension = tension * (1 + Math.abs(p.cursor.x + p.cursor.y) * 0.001)
+          // Enhanced physics with improved spring system and smoother response
+          const enhancedTension = tension * (1 + Math.abs(p.cursor.x + p.cursor.y) * 0.0008) // Reduced from 0.001
           p.cursor.vx += (0 - p.cursor.x) * enhancedTension
           p.cursor.vy += (0 - p.cursor.y) * enhancedTension
           p.cursor.vx *= friction
           p.cursor.vy *= friction
-          p.cursor.x += p.cursor.vx * 2.5
-          p.cursor.y += p.cursor.vy * 2.5
+          p.cursor.x += p.cursor.vx * 2.2 // Reduced from 2.5 for smoother motion
+          p.cursor.y += p.cursor.vy * 2.2 // Reduced from 2.5 for smoother motion
 
-          // Apply ripple effects to cursor movement
-          p.cursor.x += p.ripple.intensity * 10
-          p.cursor.y += p.ripple.intensity * 8
+          // Apply ripple effects to cursor movement with improved smoothing
+          p.cursor.x += p.ripple.intensity * 8 // Reduced from 10 for subtler effect
+          p.cursor.y += p.ripple.intensity * 6 // Reduced from 8 for subtler effect
 
+          // Limit maximum cursor influence with smoother clamping
           p.cursor.x = Math.min(
-            maxCursorMove * 1.2,
-            Math.max(-maxCursorMove * 1.2, p.cursor.x),
+            maxCursorMove * 1.1, // Reduced from 1.2 for more controlled motion
+            Math.max(-maxCursorMove * 1.1, p.cursor.x) // Reduced from 1.2 for more controlled motion
           )
           p.cursor.y = Math.min(
-            maxCursorMove * 1.2,
-            Math.max(-maxCursorMove * 1.2, p.cursor.y),
+            maxCursorMove * 1.1, // Reduced from 1.2 for more controlled motion
+            Math.max(-maxCursorMove * 1.1, p.cursor.y) // Reduced from 1.2 for more controlled motion
           )
         })
       })
@@ -455,7 +476,7 @@ export const Waves = forwardRef<WavesRef, WavesProps>(({
       // Draw main wave lines with enhanced rendering
       ctx.beginPath()
       ctx.strokeStyle = lineColor
-      ctx.lineWidth = 0.9
+      ctx.lineWidth = 0.8 // Reduced from 0.9 for more delicate lines
       ctx.lineCap = 'round'
       ctx.lineJoin = 'round'
       
@@ -470,49 +491,70 @@ export const Waves = forwardRef<WavesRef, WavesProps>(({
         if (movedPoints.length === 2) {
           ctx.lineTo(movedPoints[1].x, movedPoints[1].y)
         } else {
-          // Enhanced smooth curves with better control points
-          for (let i = 1; i < movedPoints.length - 1; i++) {
-            const current = movedPoints[i]
-            const next = movedPoints[i + 1]
-            const prev = movedPoints[i - 1]
+          // Enhanced smooth curves with cardinal spline interpolation for smoother results
+          for (let i = 0; i < movedPoints.length - 1; i++) {
+            const p0 = movedPoints[Math.max(0, i - 1)]
+            const p1 = movedPoints[i]
+            const p2 = movedPoints[i + 1]
+            const p3 = movedPoints[Math.min(movedPoints.length - 1, i + 2)]
             
-            // Calculate smooth control points
-            const controlX = current.x + (next.x - prev.x) * 0.1
-            const controlY = current.y + (next.y - prev.y) * 0.1
+            // Calculate tension factor based on distance for adaptive smoothing
+            const segmentLength = Math.hypot(p2.x - p1.x, p2.y - p1.y)
+            const tensionFactor = Math.min(0.25, 8 / (segmentLength + 0.1))
             
-            ctx.quadraticCurveTo(controlX, controlY, (current.x + next.x) / 2, (current.y + next.y) / 2)
+            // Calculate control points for smoother curve segments
+            // Using a modified Cardinal spline with tension
+            const cp1x = p1.x + (p2.x - p0.x) * tensionFactor
+            const cp1y = p1.y + (p2.y - p0.y) * tensionFactor
+            const cp2x = p2.x - (p3.x - p1.x) * tensionFactor
+            const cp2y = p2.y - (p3.y - p1.y) * tensionFactor
+            
+            // Use a bezier curve for smoother segments
+            if (i === 0) {
+              // For first segment, just use one control point
+              ctx.quadraticCurveTo(cp1x, cp1y, p2.x, p2.y)
+            } else {
+              ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y)
+            }
           }
-          
-          // Final point
-          const lastPoint = movedPoints[movedPoints.length - 1]
-          ctx.lineTo(lastPoint.x, lastPoint.y)
         }
       })
       
       ctx.stroke()
       
-      // Draw subtle glow effect around cursor - decreased radius
+      // Draw subtle glow effect around cursor with improved gradient
       const mouse = mouseRef.current
-      if (mouse.set && mouse.vs > 5) {
+      if (mouse.set && mouse.vs > 4) { // Reduced threshold from 5 to 4 for more responsive glow
+        // Create a larger, subtler gradient for smoother appearance
+        const glowRadius = Math.min(25, 5 + mouse.vs * 0.08) // Dynamic radius based on velocity
         const gradient = ctx.createRadialGradient(
           mouse.sx, mouse.sy, 0,
-          mouse.sx, mouse.sy, 0 // Further reduced from 35 to 20 for an even smaller glow radius
+          mouse.sx, mouse.sy, glowRadius
         )
-        gradient.addColorStop(0, safeColorWithOpacity(lineColor, 0.03)) // Reduced opacity from 0.05 to 0.03
+        gradient.addColorStop(0, safeColorWithOpacity(lineColor, 0.025)) // Reduced opacity for subtlety
+        gradient.addColorStop(0.7, safeColorWithOpacity(lineColor, 0.01))
         gradient.addColorStop(1, safeColorWithOpacity(lineColor, 0))
         
         ctx.fillStyle = gradient
-        ctx.fillRect(mouse.sx - 15, mouse.sy - 15, 0, 0) // Reduced to make the effect smaller
+        ctx.fillRect(mouse.sx - glowRadius, mouse.sy - glowRadius, glowRadius * 2, glowRadius * 2)
       }
       
-      // Draw ripple effects with reduced intensity
+      // Draw ripple effects with enhanced appearance
       ripplesRef.current.forEach(ripple => {
-        if (ripple.intensity > 0.1) {
-          ctx.beginPath()
-          ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2)
-          ctx.strokeStyle = safeColorWithOpacity(lineColor, ripple.intensity * 0.2) // Reduced from 0.3 to 0.2
-          ctx.lineWidth = 1.5 // Reduced from 2 to 1.5
-          ctx.stroke()
+        if (ripple.intensity > 0.08) { // Reduced threshold for more visible ripples
+          // Draw multiple concentric ripples for richer effect
+          for (let i = 0; i < 2; i++) {
+            const rippleRadius = ripple.radius - i * 8
+            if (rippleRadius > 0) {
+              ctx.beginPath()
+              ctx.arc(ripple.x, ripple.y, rippleRadius, 0, Math.PI * 2)
+              // Vary opacity based on ripple phase for more organic look
+              const opacity = ripple.intensity * (0.2 - i * 0.07) * (1 - rippleRadius / (ripple.radius + 50))
+              ctx.strokeStyle = safeColorWithOpacity(lineColor, opacity)
+              ctx.lineWidth = 1.2 - i * 0.3 // Thinner outer rings
+              ctx.stroke()
+            }
+          }
         }
       })
     }

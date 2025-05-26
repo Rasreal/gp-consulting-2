@@ -1,9 +1,8 @@
 {
-  "/(main)/about/page": "app/(main)/about/page.js",
-  "/(main)/achievements/page": "app/(main)/achievements/page.js",
-  "/(main)/industries/page": "app/(main)/industries/page.js",
-  "/(main)/page": "app/(main)/page.js",
-  "/(main)/solutions/page": "app/(main)/solutions/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/admin/industries/new/page": "app/admin/industries/new/page.js",
+  "/admin/industries/page": "app/admin/industries/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/solutions/page": "app/admin/solutions/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js"
 }

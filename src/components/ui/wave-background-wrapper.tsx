@@ -53,15 +53,15 @@ export function WaveBackgroundWrapper() {
         ref={waveRef}
         lineColor={theme === "dark" ? "rgba(255, 255, 255, 0.18)" : "rgba(0, 0, 0, 0.15)"}
         backgroundColor="transparent"
-        waveSpeedX={0.018}
-        waveSpeedY={0.01}
-        waveAmpX={28}
-        waveAmpY={18}
-        friction={0.92}
-        tension={0.012}
+        waveSpeedX={0.015}
+        waveSpeedY={0.008}
+        waveAmpX={24}
+        waveAmpY={16}
+        friction={0.94}
+        tension={0.01}
         maxCursorMove={120}
-        xGap={38}
-        yGap={70}
+        xGap={32}
+        yGap={60}
         scrollY={scrollY}
         className="pointer-events-none"
       />
