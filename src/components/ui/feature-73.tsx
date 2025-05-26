@@ -165,7 +165,8 @@ function Feature73({
           >
             {props.description}
           </motion.p>
-          <motion.div
+
+          {props.linkText && <motion.div
             initial={{ opacity: 0, x: -5 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -175,7 +176,8 @@ function Feature73({
             <Link href={props.linkUrl || ''} className="inline-flex items-center gap-2 text-base font-medium text-gp-accent hover:text-gp-primary transition">
               {props.linkText} <ArrowRight className="size-4" />
             </Link>
-          </motion.div>
+          </motion.div>}
+          
         </header>
         
         <motion.div 

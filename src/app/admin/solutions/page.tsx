@@ -4,26 +4,25 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
-import { Solution } from '@/types/content';
+import { Solution } from '@/hooks/useSolutions';
 import { Loader2, Plus } from 'lucide-react';
+import Image from 'next/image';
 
 // Fallback data in case of errors
 const FALLBACK_SOLUTIONS: Solution[] = [
   {
     id: '1',
-    title: 'AI Transformation',
-    description: 'Enterprise AI and ML solutions',
-    icon: 'ai',
-    services: ['Machine Learning', 'Neural Networks', 'Data Analytics'],
+    title: 'Все типы исследований и подготовка к запуску',
+    description: 'Анализ рынка, тестирование идей и формирование стратегии для успешного старта.',
+    image_url: 'https://optim.tildacdn.com/tild3738-3933-4763-b231-366238613764/-/cover/720x504/center/center/-/format/webp/man-touching-futuris.jpg.webp',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
   {
     id: '2',
-    title: 'Digital Transformation',
-    description: 'End-to-end digital solutions',
-    icon: 'digital',
-    services: ['Process Automation', 'Cloud Migration', 'Digital Strategy'],
+    title: 'Бизнес анализ и аудит',
+    description: 'Оценка текущего состояния компании, выявление точек роста и оптимизация процессов.',
+    image_url: 'https://optim.tildacdn.com/tild6461-3665-4539-a232-326239636562/-/resize/800x1000/-/format/webp/Picture_3.png.webp',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   }
@@ -105,10 +104,10 @@ export default function SolutionsAdminPage() {
     return (
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Solutions</h1>
+          <h1 className="text-2xl font-bold">Решения</h1>
           <Button onClick={() => router.push('/admin/solutions/new')}>
             <Plus className="w-4 h-4 mr-2" />
-            Add Solution
+            Добавить решение
           </Button>
         </div>
         <div className="p-4 border border-red-200 bg-red-50 text-red-700 rounded-md">
@@ -122,7 +121,7 @@ export default function SolutionsAdminPage() {
               fetchSolutions();
             }}
           >
-            Try Again
+            Повторить
           </Button>
         </div>
       </div>
@@ -132,17 +131,17 @@ export default function SolutionsAdminPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Solutions</h1>
+        <h1 className="text-2xl font-bold">Решения</h1>
         <Button onClick={() => router.push('/admin/solutions/new')}>
           <Plus className="w-4 h-4 mr-2" />
-          Add Solution
+          Добавить решение
         </Button>
       </div>
 
       <div className="grid gap-4">
         {solutions.length === 0 ? (
           <p className="text-muted-foreground text-center py-8">
-            No solutions found. Create your first one!
+            Решения не найдены. Создайте первое!
           </p>
         ) : (
           solutions.map((solution) => (
@@ -150,28 +149,31 @@ export default function SolutionsAdminPage() {
               key={solution.id}
               className="flex items-center justify-between p-4 bg-card rounded-lg border"
             >
-              <div>
-                <h3 className="font-medium">{solution.title}</h3>
-                <p className="text-sm text-muted-foreground line-clamp-1">
-                  {solution.description}
-                </p>
-                <div className="flex gap-2 mt-2">
-                  {solution.services?.map((service, index) => (
-                    <span
-                      key={index}
-                      className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/10 text-primary"
-                    >
-                      {service}
-                    </span>
-                  ))}
+              <div className="flex items-center gap-4 w-full">
+                {solution.image_url && (
+                  <div className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
+                    <Image 
+                      src={solution.image_url} 
+                      alt={solution.title}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                )}
+                <div className="flex-grow">
+                  <h3 className="font-medium">{solution.title}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-1">
+                    {solution.description}
+                  </p>
                 </div>
+                <Button
+                  variant="ghost"
+                  onClick={() => router.push(`/admin/solutions/${solution.id}`)}
+                >
+                  Редактировать
+                </Button>
               </div>
-              <Button
-                variant="ghost"
-                onClick={() => router.push(`/admin/solutions/${solution.id}`)}
-              >
-                Edit
-              </Button>
             </div>
           ))
         )}

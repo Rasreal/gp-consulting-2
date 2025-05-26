@@ -12,8 +12,7 @@ export interface Solution {
   id: string;
   title: string;
   description: string;
-  icon: string;
-  services: string[];
+  image_url: string;
   created_at: string;
   updated_at: string;
 }

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { Solution } from '@/types/content';
+import { Solution } from '@/hooks/useSolutions';
 import { ContentForm } from '@/components/admin/content-form';
 import { Loader2 } from 'lucide-react';
 
@@ -44,15 +44,15 @@ export default function EditSolutionPage() {
   if (!solution) {
     return (
       <div className="text-center py-12">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Solution not found</h1>
-        <p className="text-gray-600">The solution you&apos;re looking for doesn&apos;t exist.</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Решение не найдено</h1>
+        <p className="text-gray-600">Запрашиваемое решение не существует.</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Edit Solution</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">Редактировать решение</h1>
       <div className="max-w-2xl">
         <ContentForm type="solution" mode="edit" initialData={solution} />
       </div>

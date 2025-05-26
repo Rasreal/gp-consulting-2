@@ -23,10 +23,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${inter.variable} font-sans relative`}>
         <Providers>
           <WaveBackgroundWrapper />
-          {children}
+          <div className="relative z-0">
+            {children}
+          </div>
           <Toaster />
         </Providers>
       </body>
