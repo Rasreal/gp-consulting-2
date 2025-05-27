@@ -6,7 +6,7 @@ import { CTASection } from "@/components/cta-section";
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Loader2 } from 'lucide-react';
-import Image from 'next/image';
+
 import { 
   TransportIcon, 
   TelecomIcon, 

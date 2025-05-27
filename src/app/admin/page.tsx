@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/card';
-import { Factory, Lightbulb, Trophy, Briefcase, Calendar, Clock, User, Mail, Building, Phone, MessageSquare } from 'lucide-react';
+import { Factory, Lightbulb, Trophy, Briefcase, Calendar, Clock, Mail, Building, Phone, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 
 interface Stats {

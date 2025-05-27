@@ -14,6 +14,7 @@ const FALLBACK_INDUSTRIES: Industry[] = [
     title: 'Transport',
     description: 'Transportation and logistics solutions',
     icon: 'TransportIcon',
+    image_url: '',
     services: ['Fleet Management', 'Route Optimization'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
@@ -23,6 +24,7 @@ const FALLBACK_INDUSTRIES: Industry[] = [
     title: 'Telecom',
     description: 'Telecommunications infrastructure',
     icon: 'TelecomIcon',
+    image_url: '',
     services: ['Network Infrastructure', '5G Solutions'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()

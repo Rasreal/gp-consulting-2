@@ -7,6 +7,7 @@ const industries: Omit<Industry, 'id'>[] = [
   {
     title: "Транспорт",
     icon: "TransportIcon",
+    image_url: '',
     description: "Комплексные решения для транспортных компаний, включающие управление автопарком, оптимизацию логистических маршрутов и внедрение IoT-систем мониторинга.",
     services: [
       "Система управления автопарком",
@@ -20,6 +21,7 @@ const industries: Omit<Industry, 'id'>[] = [
   {
     title: "Телеком",
     icon: "TelecomIcon",
+    image_url: '',
     description: "Цифровая трансформация телекоммуникационных компаний с фокусом на автоматизацию биллинга и персонализацию клиентского опыта.",
     services: [
       "Автоматизация биллинговых систем",
@@ -33,6 +35,7 @@ const industries: Omit<Industry, 'id'>[] = [
   {
     title: "Логистика",
     icon: "LogisticsIcon",
+    image_url: '',
     description: "Автоматизация складских и транспортных процессов с использованием современных WMS/TMS систем и предиктивной аналитики.",
     services: [
       "Внедрение WMS/TMS систем",
@@ -46,6 +49,7 @@ const industries: Omit<Industry, 'id'>[] = [
   {
     title: "Производство",
     icon: "ManufacturingIcon",
+    image_url: '',
     description: "Цифровизация производственных процессов с внедрением Industry 4.0 технологий и систем контроля качества на базе ИИ.",
     services: [
       "Внедрение MES/APS систем",

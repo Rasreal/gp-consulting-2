@@ -13,6 +13,7 @@ const DEFAULT_DATA: ContentTypes = {
   industries: [
     {
       id: "transport",
+      image_url: '',
       title: "Транспорт",
       description: "Оптимизация процессов и внедрение современных технологий в транспортном секторе для повышения эффективности и безопасности.",
       icon: "TransportIcon",
