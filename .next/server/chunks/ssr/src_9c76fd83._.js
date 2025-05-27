@@ -337,7 +337,7 @@ function ContentForm({ type, initialData, mode }) {
         description: '',
         icon: type === 'industry' ? INDUSTRY_ICONS[0] : undefined,
         services: type === 'industry' ? [] : undefined,
-        image_url: type === 'solution' ? '' : undefined,
+        image_url: type === 'industry' || type === 'solution' ? '' : undefined,
         value: type === 'achievement' ? '' : undefined,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -354,9 +354,9 @@ function ContentForm({ type, initialData, mode }) {
             };
             // Format services as array if it's a string (for industry type)
             if (type === 'industry') {
-                // Remove image_url and value from industry data
+                // Remove value from industry data (but keep image_url)
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { image_url, value, ...industryData } = finalData;
+                const { value, ...industryData } = finalData;
                 // Process services field
                 let processedServices = [];
                 if (typeof industryData.services === 'string') {
@@ -546,11 +546,73 @@ function ContentForm({ type, initialData, mode }) {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
+                                        htmlFor: "image_url",
+                                        children: "Image URL"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/admin/content-form.tsx",
+                                        lineNumber: 223,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                        id: "image_url",
+                                        value: formData.image_url || '',
+                                        onChange: (e)=>setFormData({
+                                                ...formData,
+                                                image_url: e.target.value
+                                            }),
+                                        placeholder: "https://example.com/image.jpg"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/admin/content-form.tsx",
+                                        lineNumber: 224,
+                                        columnNumber: 17
+                                    }, this),
+                                    formData.image_url && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "mt-2 border rounded-md p-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-sm text-muted-foreground mb-2",
+                                                children: "Preview:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/admin/content-form.tsx",
+                                                lineNumber: 232,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "relative aspect-video max-w-xs rounded-md overflow-hidden",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                    src: formData.image_url,
+                                                    alt: "Preview",
+                                                    className: "object-cover w-full h-full"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/admin/content-form.tsx",
+                                                    lineNumber: 234,
+                                                    columnNumber: 23
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/admin/content-form.tsx",
+                                                lineNumber: 233,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/admin/content-form.tsx",
+                                        lineNumber: 231,
+                                        columnNumber: 19
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/admin/content-form.tsx",
+                                lineNumber: 222,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
                                         htmlFor: "services",
                                         children: "Services (comma-separated)"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/admin/content-form.tsx",
-                                        lineNumber: 223,
+                                        lineNumber: 245,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -564,13 +626,13 @@ function ContentForm({ type, initialData, mode }) {
                                         placeholder: "Enter services separated by commas"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/admin/content-form.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 246,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 222,
+                                lineNumber: 244,
                                 columnNumber: 15
                             }, this)
                         ]
@@ -582,7 +644,7 @@ function ContentForm({ type, initialData, mode }) {
                                 children: "Image URL"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 237,
+                                lineNumber: 259,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -596,7 +658,7 @@ function ContentForm({ type, initialData, mode }) {
                                 placeholder: "https://example.com/image.jpg"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 238,
+                                lineNumber: 260,
                                 columnNumber: 15
                             }, this),
                             formData.image_url && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -607,7 +669,7 @@ function ContentForm({ type, initialData, mode }) {
                                         children: "Preview:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/admin/content-form.tsx",
-                                        lineNumber: 247,
+                                        lineNumber: 269,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -618,24 +680,24 @@ function ContentForm({ type, initialData, mode }) {
                                             className: "object-cover w-full h-full"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/admin/content-form.tsx",
-                                            lineNumber: 249,
+                                            lineNumber: 271,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/admin/content-form.tsx",
-                                        lineNumber: 248,
+                                        lineNumber: 270,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 246,
+                                lineNumber: 268,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/admin/content-form.tsx",
-                        lineNumber: 236,
+                        lineNumber: 258,
                         columnNumber: 13
                     }, this)
                 ]
@@ -649,7 +711,7 @@ function ContentForm({ type, initialData, mode }) {
                                 children: "Value"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 265,
+                                lineNumber: 287,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -663,13 +725,13 @@ function ContentForm({ type, initialData, mode }) {
                                 placeholder: "e.g. '95%' or '> 25' or '+18 pp'"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 266,
+                                lineNumber: 288,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/admin/content-form.tsx",
-                        lineNumber: 264,
+                        lineNumber: 286,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -679,7 +741,7 @@ function ContentForm({ type, initialData, mode }) {
                                 children: "Title"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 276,
+                                lineNumber: 298,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -692,13 +754,13 @@ function ContentForm({ type, initialData, mode }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 277,
+                                lineNumber: 299,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/admin/content-form.tsx",
-                        lineNumber: 275,
+                        lineNumber: 297,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -708,7 +770,7 @@ function ContentForm({ type, initialData, mode }) {
                                 children: "Description"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 286,
+                                lineNumber: 308,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -721,13 +783,13 @@ function ContentForm({ type, initialData, mode }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 287,
+                                lineNumber: 309,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/admin/content-form.tsx",
-                        lineNumber: 285,
+                        lineNumber: 307,
                         columnNumber: 11
                     }, this)
                 ]
@@ -747,7 +809,7 @@ function ContentForm({ type, initialData, mode }) {
                                         className: "mr-2 h-4 w-4 animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/admin/content-form.tsx",
-                                        lineNumber: 308,
+                                        lineNumber: 330,
                                         columnNumber: 19
                                     }, this),
                                     "Deleting..."
@@ -755,12 +817,12 @@ function ContentForm({ type, initialData, mode }) {
                             }, void 0, true) : 'Delete'
                         }, void 0, false, {
                             fileName: "[project]/src/components/admin/content-form.tsx",
-                            lineNumber: 300,
+                            lineNumber: 322,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/admin/content-form.tsx",
-                        lineNumber: 298,
+                        lineNumber: 320,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -774,7 +836,7 @@ function ContentForm({ type, initialData, mode }) {
                                 children: "Cancel"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 318,
+                                lineNumber: 340,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -786,7 +848,7 @@ function ContentForm({ type, initialData, mode }) {
                                             className: "mr-2 h-4 w-4 animate-spin"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/admin/content-form.tsx",
-                                            lineNumber: 330,
+                                            lineNumber: 352,
                                             columnNumber: 17
                                         }, this),
                                         mode === 'create' ? 'Creating...' : 'Updating...'
@@ -794,19 +856,19 @@ function ContentForm({ type, initialData, mode }) {
                                 }, void 0, true) : mode === 'create' ? 'Create' : 'Update'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/content-form.tsx",
-                                lineNumber: 327,
+                                lineNumber: 349,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/admin/content-form.tsx",
-                        lineNumber: 317,
+                        lineNumber: 339,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/admin/content-form.tsx",
-                lineNumber: 297,
+                lineNumber: 319,
                 columnNumber: 7
             }, this)
         ]
