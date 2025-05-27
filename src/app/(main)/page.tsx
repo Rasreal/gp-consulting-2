@@ -51,7 +51,13 @@ export default function Home() {
       <FeaturesGrid />
 
       {/* Industries Section */}
-      <Feature73 linkText="Подробнее" linkUrl="/industries" heading="Наши отрасли" description="Мы работаем с ведущими компаниями в различных отраслях, помогая им автоматизировать процессы и растить бизнес с помощью инновационных технологий." />
+      <Feature73 
+        linkText="Подробнее" 
+        linkUrl="/industries" 
+        heading="Наши отрасли" 
+        description="Мы работаем с ведущими компаниями в различных отраслях, помогая им автоматизировать процессы и растить бизнес с помощью инновационных технологий." 
+        showImages={true}
+      />
       
       {/* Team Section */}
       <TeamSection />

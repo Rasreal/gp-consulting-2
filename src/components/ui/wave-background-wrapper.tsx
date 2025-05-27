@@ -53,15 +53,15 @@ export function WaveBackgroundWrapper() {
         ref={waveRef}
         lineColor={theme === "dark" ? "rgba(255, 255, 255, 0.18)" : "rgba(0, 0, 0, 0.15)"}
         backgroundColor="transparent"
-        waveSpeedX={0.015}
-        waveSpeedY={0.008}
-        waveAmpX={24}
-        waveAmpY={16}
+        waveSpeedX={0.017}
+        waveSpeedY={0.009}
+        waveAmpX={28}
+        waveAmpY={20}
         friction={0.94}
         tension={0.01}
         maxCursorMove={120}
-        xGap={32}
-        yGap={60}
+        xGap={27}
+        yGap={51}
         scrollY={scrollY}
         className="pointer-events-none"
       />
@@ -98,6 +98,29 @@ export function WaveBackgroundWrapper() {
           top: `calc(60% + ${scrollY * 0.08}px)`, 
           left: '70%',
           transform: 'translate(calc(var(--x, 0px) * -0.025), calc(var(--y, 0px) * 0.018))',
+          willChange: 'transform',
+          zIndex: -15
+        }}
+      />
+      
+      {/* Additional floating elements for enhanced wave effect */}
+      <div 
+        className="absolute w-28 h-28 rounded-full bg-gp-accent/7 blur-2xl transition-all duration-950 ease-out pointer-events-none"
+        style={{ 
+          top: `calc(35% + ${scrollY * 0.06}px)`, 
+          left: '30%',
+          transform: 'translate(calc(var(--x, 0px) * 0.022), calc(var(--y, 0px) * -0.019))',
+          willChange: 'transform',
+          zIndex: -15
+        }}
+      />
+      
+      <div 
+        className="absolute w-36 h-36 rounded-full bg-gp-accent/5 blur-3xl transition-all duration-1100 ease-out pointer-events-none"
+        style={{ 
+          bottom: `calc(40% + ${scrollY * 0.04}px)`, 
+          right: '35%',
+          transform: 'translate(calc(var(--x, 0px) * -0.018), calc(var(--y, 0px) * 0.017))',
           willChange: 'transform',
           zIndex: -15
         }}

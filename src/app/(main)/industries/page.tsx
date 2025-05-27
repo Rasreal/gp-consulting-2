@@ -2,35 +2,40 @@
 
 import { motion } from "framer-motion";
 import { PageTemplate } from "@/components/ui/page-template";
-
-import { 
-  TransportIcon, 
-  TelecomIcon, 
-  LogisticsIcon,
-  ManufacturingIcon
-} from "@/components/icons/industry-icons";
 import { CTASection } from "@/components/cta-section";
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Loader2 } from 'lucide-react';
-
-// Icon mapping
-const iconMap = {
-  TransportIcon,
-  TelecomIcon,
+import Image from 'next/image';
+import { 
+  TransportIcon, 
+  TelecomIcon, 
+  FinanceIcon, 
   LogisticsIcon,
-  ManufacturingIcon
-};
+  ManufacturingIcon,
+  EnergyIcon
+} from "@/components/icons/industry-icons";
 
 interface Industry {
   id: string;
   title: string;
   description: string;
   icon: string;
+  image_url: string;
   services: string[];
   created_at: string;
   updated_at: string;
 }
+
+// Icon mapping
+const iconMap = {
+  TransportIcon,
+  TelecomIcon,
+  FinanceIcon,
+  LogisticsIcon,
+  ManufacturingIcon,
+  EnergyIcon
+};
 
 export default function IndustriesPage() {
   const [industries, setIndustries] = useState<Industry[]>([]);
@@ -105,49 +110,53 @@ export default function IndustriesPage() {
       <section className="py-1">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {industries.map((industry) => {
-              const Icon = iconMap[industry.icon as keyof typeof iconMap];
-              return (
-                <motion.div
-                  key={industry.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.02 }}
-                  className="glass-card p-8 hover:border-black border border-gray-200"
-                >
-                  <div className="flex items-center mb-6">
-                    <div className="w-16 h-16 glass-subtle rounded-full flex items-center justify-center mr-4">
-                      {Icon && <Icon className="w-8 h-8 text-gp-primary" />}
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-semibold text-gp-primary mb-2">
-                        {industry.title}
-                      </h3>
-                    </div>
+            {industries.map((industry) => (
+              <motion.div
+                key={industry.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+                className="glass-card p-8 hover:border-black border border-gray-200"
+              >
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 glass-subtle rounded-full flex items-center justify-center mr-4 overflow-hidden relative">
+                    {industry.icon ? (
+                      (() => {
+                        const Icon = iconMap[industry.icon as keyof typeof iconMap] || TransportIcon;
+                        return <Icon className="w-8 h-8 text-gp-primary" aria-hidden="true" />;
+                      })()
+                    ) : (
+                      <div className="w-8 h-8 bg-gp-primary/20 rounded-full"></div>
+                    )}
                   </div>
-
-                  <p className="text-gp-primary/80 mb-6 leading-relaxed">
-                    {industry.description}
-                  </p>
-
                   <div>
-                    <h4 className="font-semibold text-gp-primary mb-3">
-                      Ключевые решения:
-                    </h4>
-                    <ul className="space-y-2">
-                      {industry.services.map((service, solutionIndex) => (
-                        <li key={solutionIndex} className="flex items-center">
-                          <span className="w-2 h-2 bg-gp-accent rounded-full mr-3"></span>
-                          <span className="text-gp-primary/70">{service}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <h3 className="text-2xl font-semibold text-gp-primary mb-2">
+                      {industry.title}
+                    </h3>
                   </div>
-                </motion.div>
-              );
-            })}
+                </div>
+
+                <p className="text-gp-primary/80 mb-6 leading-relaxed">
+                  {industry.description}
+                </p>
+
+                <div>
+                  <h4 className="font-semibold text-gp-primary mb-3">
+                    Ключевые решения:
+                  </h4>
+                  <ul className="space-y-2">
+                    {industry.services.map((service, solutionIndex) => (
+                      <li key={solutionIndex} className="flex items-center">
+                        <span className="w-2 h-2 bg-gp-accent rounded-full mr-3"></span>
+                        <span className="text-gp-primary/70">{service}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

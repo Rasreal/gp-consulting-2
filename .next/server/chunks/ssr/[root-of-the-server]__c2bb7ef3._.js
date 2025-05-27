@@ -919,15 +919,15 @@ function WaveBackgroundWrapper() {
                 ref: waveRef,
                 lineColor: theme === "dark" ? "rgba(255, 255, 255, 0.18)" : "rgba(0, 0, 0, 0.15)",
                 backgroundColor: "transparent",
-                waveSpeedX: 0.015,
-                waveSpeedY: 0.008,
-                waveAmpX: 24,
-                waveAmpY: 16,
+                waveSpeedX: 0.017,
+                waveSpeedY: 0.009,
+                waveAmpX: 28,
+                waveAmpY: 20,
                 friction: 0.94,
                 tension: 0.01,
                 maxCursorMove: 120,
-                xGap: 32,
-                yGap: 60,
+                xGap: 27,
+                yGap: 51,
                 scrollY: scrollY,
                 className: "pointer-events-none"
             }, void 0, false, {
@@ -985,6 +985,34 @@ function WaveBackgroundWrapper() {
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
                 lineNumber: 95,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "absolute w-28 h-28 rounded-full bg-gp-accent/7 blur-2xl transition-all duration-950 ease-out pointer-events-none",
+                style: {
+                    top: `calc(35% + ${scrollY * 0.06}px)`,
+                    left: '30%',
+                    transform: 'translate(calc(var(--x, 0px) * 0.022), calc(var(--y, 0px) * -0.019))',
+                    willChange: 'transform',
+                    zIndex: -15
+                }
+            }, void 0, false, {
+                fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
+                lineNumber: 107,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "absolute w-36 h-36 rounded-full bg-gp-accent/5 blur-3xl transition-all duration-1100 ease-out pointer-events-none",
+                style: {
+                    bottom: `calc(40% + ${scrollY * 0.04}px)`,
+                    right: '35%',
+                    transform: 'translate(calc(var(--x, 0px) * -0.018), calc(var(--y, 0px) * 0.017))',
+                    willChange: 'transform',
+                    zIndex: -15
+                }
+            }, void 0, false, {
+                fileName: "[project]/src/components/ui/wave-background-wrapper.tsx",
+                lineNumber: 118,
                 columnNumber: 7
             }, this)
         ]

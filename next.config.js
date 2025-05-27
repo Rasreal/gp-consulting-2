@@ -14,6 +14,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'api.dicebear.com',
       },
+      {
+        protocol: 'https',
+        hostname: '**', // Allow all https domains
+      },
+      {
+        protocol: 'http',
+        hostname: '**', // Allow all http domains
+      },
     ],
   },
 }

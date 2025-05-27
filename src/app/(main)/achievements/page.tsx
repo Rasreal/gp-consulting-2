@@ -329,7 +329,7 @@ export default function AchievementsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="glass-card overflow-hidden"
+                  className="glass-card overflow-hidden border border-gray-300"
                 >
                   <div className="relative h-48">
                     <Image

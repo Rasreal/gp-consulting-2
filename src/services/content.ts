@@ -8,6 +8,7 @@ export const DEFAULT_INDUSTRIES: Industry[] = [
     title: 'Healthcare',
     description: 'Innovative solutions for healthcare providers',
     icon: 'medical',
+    image_url: 'https://optim.tildacdn.com/tild3738-3933-4763-b231-366238613764/-/cover/720x504/center/center/-/format/webp/man-touching-futuris.jpg.webp',
     services: ['Medical Records', 'Patient Care', 'Hospital Management'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()

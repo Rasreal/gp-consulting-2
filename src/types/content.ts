@@ -3,6 +3,7 @@ export interface Industry {
   title: string;
   description: string;
   icon: string;
+  image_url: string;
   services: string[];
   created_at: string;
   updated_at: string;

@@ -59,7 +59,7 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
       description: '',
       icon: type === 'industry' ? INDUSTRY_ICONS[0] : undefined,
       services: type === 'industry' ? [] : undefined,
-      image_url: type === 'solution' ? '' : undefined,
+      image_url: type === 'industry' || type === 'solution' ? '' : undefined,
       value: type === 'achievement' ? '' : undefined,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
@@ -80,9 +80,9 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
 
       // Format services as array if it's a string (for industry type)
       if (type === 'industry') {
-        // Remove image_url and value from industry data
+        // Remove value from industry data (but keep image_url)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { image_url, value, ...industryData } = finalData;
+        const { value, ...industryData } = finalData;
         
         // Process services field
         let processedServices: string[] = [];
@@ -217,6 +217,28 @@ export function ContentForm({ type, initialData, mode }: ContentFormProps) {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="image_url">Image URL</Label>
+                <Input
+                  id="image_url"
+                  value={formData.image_url || ''}
+                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                  placeholder="https://example.com/image.jpg"
+                />
+                {formData.image_url && (
+                  <div className="mt-2 border rounded-md p-2">
+                    <p className="text-sm text-muted-foreground mb-2">Preview:</p>
+                    <div className="relative aspect-video max-w-xs rounded-md overflow-hidden">
+                      <img 
+                        src={formData.image_url} 
+                        alt="Preview" 
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div>
