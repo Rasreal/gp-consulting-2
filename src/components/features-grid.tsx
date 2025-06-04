@@ -1,39 +1,29 @@
 "use client";
 
-import { Zap, Cpu, Fingerprint, Pencil, Settings2, Sparkles } from "lucide-react";
+import { Award, Briefcase, Users, BadgeDollarSign } from "lucide-react";
 import { FeatureCard } from "@/components/ui/grid-feature-cards";
 import { motion } from "framer-motion";
 
 const features = [
   {
-    title: "Стратегия",
-    icon: Zap,
-    description: "Разрабатываем стратегии роста и трансформации",
+    title: "Практическая ценность рекомендаций",
+    icon: Award,
+    description: "Мы предлагаем только практически применимые решения, которые приносят реальную пользу вашему бизнесу",
   },
   {
-    title: "Анализ",
-    icon: Cpu,
-    description: "Превращаем данные в инсайты для решений",
+    title: "Опыт в реальном секторе",
+    icon: Briefcase,
+    description: "Наши консультанты имеют богатый опыт работы в реальном бизнесе, а не только теоретические знания",
   },
   {
-    title: "Продукты",
-    icon: Fingerprint,
-    description: "Создаем продукты, решающие бизнес-задачи",
+    title: "Доступ к экспертизе",
+    icon: Users,
+    description: "Мы привлекаем узкопрофильных экспертов с глубокими знаниями в своих областях",
   },
   {
-    title: "AI и автоматизация",
-    icon: Pencil,
-    description: "Внедряем ИИ и автоматизируем процессы",
-  },
-  {
-    title: "Маркетинг",
-    icon: Settings2,
-    description: "Помогаем привлекать и удерживать клиентов",
-  },
-  {
-    title: "IT и цифровизация",
-    icon: Sparkles,
-    description: "Внедряем и оптимизируем IT-системы",
+    title: "Умеренная цена",
+    icon: BadgeDollarSign,
+    description: "Мы предлагаем оптимальное соотношение цены и качества для наших услуг",
   },
 ];
 
@@ -60,7 +50,7 @@ export function FeaturesGrid() {
             viewport={{ once: true }}
             className="mb-3 text-xl font-semibold md:mb-4 md:text-4xl lg:mb-6 text-gp-primary"
           >
-            Наши решения
+            Наши преимущества
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
@@ -69,7 +59,7 @@ export function FeaturesGrid() {
             viewport={{ once: true }}
             className="mb-8 text-gp-text-gray lg:text-lg"
           >
-            Помогаем компаниям расти через данные, процессы и инновационные технологии
+            Почему клиенты выбирают нас для решения своих бизнес-задач
           </motion.p>
         </div>
 
@@ -78,7 +68,7 @@ export function FeaturesGrid() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 divide-x divide-y divide-dashed glass-card sm:grid-cols-2 md:grid-cols-3"
+          className="grid grid-cols-1 divide-x divide-y divide-dashed glass-card sm:grid-cols-2"
         >
           {features.map((feature, i) => (
             <motion.div

@@ -37,6 +37,18 @@ const iconMap = {
   EnergyIcon
 };
 
+// Default Finance industry if not found in database
+const defaultFinanceIndustry: Industry = {
+  id: "finance",
+  title: "Финансы",
+  description: "Контент в разработке",
+  icon: "FinanceIcon",
+  image_url: "",
+  services: ["Банки", "Финтех", "Страхование", "Инвестиции"],
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString()
+};
+
 export default function IndustriesPage() {
   const [industries, setIndustries] = useState<Industry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -51,11 +63,28 @@ export default function IndustriesPage() {
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setIndustries(data || []);
+        
+        // Create a copy of the data
+        const industriesData = data || [];
+        
+        // Check if Finance industry exists
+        const hasFinanceIndustry = industriesData.some(
+          industry => industry.title === "Финансы" || industry.icon === "FinanceIcon"
+        );
+        
+        // If not, add it
+        if (!hasFinanceIndustry) {
+          industriesData.push(defaultFinanceIndustry);
+        }
+        
+        setIndustries(industriesData);
       } catch (error: unknown) {
         console.error('Error fetching industries:', error);
         const message = error instanceof Error ? error.message : 'Error loading industries';
         setError(message);
+        
+        // If error, at least show Finance industry
+        setIndustries([defaultFinanceIndustry]);
       } finally {
         setIsLoading(false);
       }

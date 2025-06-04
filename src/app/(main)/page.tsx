@@ -10,8 +10,14 @@ import { TeamSection } from "@/components/team-section";
 import { AnimatedTestimonialsDemo } from "@/components/animated-testimonials-demo";
 import { motion } from "framer-motion";
 import { CTASection } from "@/components/cta-section";
+import { featureFlags } from "@/config/feature-flags";
 
 export default function Home() {
+  // Determine CTA button text and link based on feature flag
+  const ctaType = featureFlags.homePage.ctaType;
+  const buttonText = ctaType === 'book' ? 'Забронировать встречу' : 'Связаться с нами';
+  const buttonLink = ctaType === 'book' ? '/book' : '/contacts';
+
   return (
     <div>
       {/* Hero Section - Full Screen */}
@@ -37,19 +43,19 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               <Button className="bg-white text-gp-primary hover:bg-black hover:text-white" asChild>
-                <Link href="/book">Забронировать встречу</Link>
+                <Link href={buttonLink}>{buttonText}</Link>
               </Button>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Logos Section */}
-      <Logos3Demo />
-      
-      {/* Solutions Section */}
+      {/* Our Advantages Section */}
       <FeaturesGrid />
 
+      {/* Logos Section - Нам доверяют */}
+      <Logos3Demo />
+      
       {/* Industries Section */}
       <Feature73 
         linkText="Подробнее" 
@@ -59,35 +65,37 @@ export default function Home() {
         showImages={true}
       />
       
-      {/* Team Section */}
+      {/* Team Section - conditionally rendered based on feature flag */}
       <TeamSection />
       
-      {/* Testimonials Section */}
-      <section className="py-16">
-        <div className="container mx-auto">
-          <div className="mb-12 text-center">
-            <motion.h2 
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-semibold mb-4 text-gp-primary"
-            >
-              Что говорят клиенты
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="text-gp-text-gray text-lg max-w-2xl mx-auto"
-            >
-              Результаты нашей работы с ведущими компаниями
-            </motion.p>
+      {/* Testimonials Section - conditionally rendered based on feature flag */}
+      {featureFlags.homePage.showTestimonials && (
+        <section className="py-16">
+          <div className="container mx-auto">
+            <div className="mb-12 text-center">
+              <motion.h2 
+                initial={{ opacity: 0, y: -10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="text-3xl md:text-4xl font-semibold mb-4 text-gp-primary"
+              >
+                Что говорят клиенты
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="text-gp-text-gray text-lg max-w-2xl mx-auto"
+              >
+                Результаты нашей работы с ведущими компаниями
+              </motion.p>
+            </div>
+            <AnimatedTestimonialsDemo forceShow={true} />
           </div>
-          <AnimatedTestimonialsDemo />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA Section */}
       <CTASection 

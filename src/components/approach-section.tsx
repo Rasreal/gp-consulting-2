@@ -1,6 +1,5 @@
 "use client";
 
-import { CheckCircle } from "lucide-react";
 
 interface ApproachStep {
   id: string;
@@ -52,7 +51,7 @@ export function ApproachSection({ className = "" }: ApproachSectionProps) {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gp-primary mb-4">Наш подход</h2>
           <p className="text-xl text-gp-text-gray max-w-3xl mx-auto">
-            Мы работаем по методологии, которая гарантирует результаты
+            Мы работаем по методологии, которая подтверждена результатами
           </p>
         </div>
 
@@ -69,10 +68,6 @@ export function ApproachSection({ className = "" }: ApproachSectionProps) {
                 <h3 className="text-xl font-bold text-gp-primary">{step.title}</h3>
               </div>
               <p className="text-gp-text-gray">{step.description}</p>
-              <div className="mt-6 flex items-center text-gp-primary">
-                <CheckCircle className="w-5 h-5 mr-2" />
-                <span className="text-sm font-medium">Проверенный подход</span>
-              </div>
             </div>
           ))}
         </div>

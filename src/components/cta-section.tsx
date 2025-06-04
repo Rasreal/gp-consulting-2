@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { featureFlags } from "@/config/feature-flags";
 
 interface CTASectionProps {
   title?: string;
@@ -12,6 +13,11 @@ export function CTASection({
   title = "Готовы начать трансформацию?",
   description = "Свяжитесь с нами сегодня, чтобы обсудить, как мы можем помочь вашему бизнесу расти и развиваться с помощью инновационных технологий.",
 }: CTASectionProps) {
+  // Determine CTA button text and link based on feature flag
+  const ctaType = featureFlags.homePage.ctaType;
+  const buttonText = ctaType === 'book' ? 'Забронировать встречу' : 'Связаться с нами';
+  const buttonLink = ctaType === 'book' ? '/book' : '/contacts';
+
   return (
     <section className="py-20">
       <div className="container text-center">
@@ -32,10 +38,10 @@ export function CTASection({
             className="inline-block"
           >
             <Link 
-              href="/book"
+              href={buttonLink}
               className="bg-white text-gp-primary hover:bg-black hover:text-white px-8 py-4 rounded-full font-medium shadow-lg inline-block"
             >
-              Забронировать встречу
+              {buttonText}
             </Link>
           </motion.div>
         </motion.div>

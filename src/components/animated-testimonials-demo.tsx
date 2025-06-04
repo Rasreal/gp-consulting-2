@@ -1,8 +1,19 @@
 "use client";
 
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
+import { featureFlags } from "@/config/feature-flags";
+import { motion } from "framer-motion";
 
-function AnimatedTestimonialsDemo() {
+interface AnimatedTestimonialsDemoProps {
+  forceShow?: boolean;
+}
+
+function AnimatedTestimonialsDemo({ forceShow = false }: AnimatedTestimonialsDemoProps) {
+  // If testimonials are disabled by feature flag and not forced to show, return null
+  if (!featureFlags.homePage.showTestimonials && !forceShow) {
+    return null;
+  }
+  
   const testimonials = [
     {
       quote:
@@ -40,6 +51,20 @@ function AnimatedTestimonialsDemo() {
       src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ];
+  
+  // If there are no testimonials, show a placeholder
+  if (testimonials.length === 0) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="bg-gray-50 p-8 text-center rounded-lg shadow-sm"
+      >
+        <p className="text-lg text-gp-primary/70">Раздел в разработке</p>
+      </motion.div>
+    );
+  }
+  
   return <AnimatedTestimonials testimonials={testimonials} autoplay={true} />;
 }
 

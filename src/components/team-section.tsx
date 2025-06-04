@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Linkedin, Mail } from "lucide-react";
+import { featureFlags } from "@/config/feature-flags";
 
 interface TeamMember {
   name: string;
@@ -18,45 +19,69 @@ interface TeamSectionProps {
   heading?: string;
   description?: string;
   members?: TeamMember[];
+  forceShow?: boolean;
 }
 
 const defaultMembers: TeamMember[] = [
   {
-    name: "Марат Алиев",
-    position: "CEO / Основатель",
+    name: "Антон Мягков",
+    position: "Партнер",
     image: "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=400&h=400&q=80&fit=crop",
-    bio: "Более 15 лет опыта в управлении цифровыми проектами. Бывший CIO QazCode.",
+    bio: "10+ лет опыта в стратегии, цифровой трансформации, ИТ-аудитах и запуске новых направлений.",
     linkedin: "https://linkedin.com",
-    email: "marat@gpconsulting.kz",
+    email: "anton@gpconsulting.kz",
   },
   {
-    name: "Аслан Нурланов",
-    position: "CTO",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&q=80&fit=crop",
-    bio: "Эксперт в области ИИ и машинного обучения. Опыт работы с VEON и международными компаниями.",
-    linkedin: "https://linkedin.com",
-    email: "aslan@gpconsulting.kz",
-  },
-  {
-    name: "Айдана Жумабаева",
-    position: "Директор по маркетингу",
-    image: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?w=400&h=400&q=80&fit=crop",
-    bio: "Специалист по цифровому маркетингу с опытом работы в технологическом секторе.",
-    linkedin: "https://linkedin.com",
-    email: "aidana@gpconsulting.kz",
-  },
-  {
-    name: "Анна Сатыбалдинова",
-    position: "Технический директор",
+    name: "Артем Карбан",
+    position: "Эксперт по цифровым продуктам",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&q=80&fit=crop",
-    bio: "Эксперт в области разработки и интеграции программного обеспечения.",
+    bio: "Опыт в разработке и масштабировании цифровых решений, управлении IT-продуктами и agile-командами.",
     linkedin: "https://linkedin.com",
-    email: "anna@gpconsulting.kz",
+    email: "artem@gpconsulting.kz",
+  },
+  {
+    name: "Сергей Пустовит",
+    position: "Бизнес-аналитик",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&q=80&fit=crop",
+    bio: "Специалист по анализу бизнес-процессов, сбору требований и оптимизации рабочих потоков.",
+    linkedin: "https://linkedin.com",
+    email: "sergey@gpconsulting.kz",
+  },
+  {
+    name: "Роман Маслихов",
+    position: "Эксперт по процессному управлению",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&q=80&fit=crop",
+    bio: "15+ лет в телекоме, 50+ проектов, член Ассоциации BPM.",
+    linkedin: "https://linkedin.com",
+    email: "roman@gpconsulting.kz",
+  },
+  {
+    name: "Николай Хотеев",
+    position: "Консультант",
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&q=80&fit=crop",
+    bio: "20+ лет в консалтинге и ИТ, экс-CIO, опыт внедрения корпоративных систем.",
+    linkedin: "https://linkedin.com",
+    email: "nikolay@gpconsulting.kz",
   },
 ];
 
 
+
 export function TeamSection(props: TeamSectionProps): React.ReactNode {
+  // If we're on the home page and the feature flag is disabled, don't show the section
+  // If forceShow is true, always show (used for the About page)
+  const isAboutPage = props.forceShow;
+  const shouldShowOnHomePage = featureFlags.homePage.showTeamSection;
+  const shouldShowOnAboutPage = featureFlags.aboutPage.showTeamSection;
+  
+  if (!isAboutPage && !shouldShowOnHomePage) {
+    return null;
+  }
+  
+  if (isAboutPage && !shouldShowOnAboutPage) {
+    return null;
+  }
+  
   const heading = props.heading || "Наша команда";
   const description = props.description || "Эксперты с опытом работы в ведущих компаниях";
   const members = props.members || defaultMembers;
@@ -106,7 +131,7 @@ export function TeamSection(props: TeamSectionProps): React.ReactNode {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {members.map((member, index) => (
             <motion.div

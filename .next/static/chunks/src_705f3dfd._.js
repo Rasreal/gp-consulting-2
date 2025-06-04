@@ -79,48 +79,48 @@ var _s = __turbopack_context__.k.signature();
 const defaultSolutions = [
     {
         id: "1",
-        title: "Все типы исследований и подготовка к запуску",
-        description: "Анализ рынка, тестирование идей и формирование стратегии для успешного старта.",
+        title: "Аналитика и стратегия",
+        description: "Глубокий анализ рынка, разработка стратегии роста и дорожной карты для бизнеса.",
         image_url: "https://optim.tildacdn.com/tild3738-3933-4763-b231-366238613764/-/cover/720x504/center/center/-/format/webp/man-touching-futuris.jpg.webp",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
     },
     {
         id: "2",
-        title: "Бизнес анализ и аудит",
-        description: "Оценка текущего состояния компании, выявление точек роста и оптимизация процессов.",
+        title: "Запуск новых продуктов",
+        description: "Поддержка на всех этапах от идеи до вывода на рынок и первых продаж.",
         image_url: "https://optim.tildacdn.com/tild6461-3665-4539-a232-326239636562/-/resize/800x1000/-/format/webp/Picture_3.png.webp",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
     },
     {
         id: "3",
-        title: "Вывод нового продукта на рынок",
-        description: "От концепции до первых продаж: стратегия, позиционирование и продвижение.",
+        title: "Маркетинг и продажи",
+        description: "Разработка стратегии продвижения, оптимизация воронки и увеличение продаж.",
         image_url: "https://optim.tildacdn.com/tild3037-6264-4835-b062-626462633766/-/cover/720x504/center/center/-/format/webp/analyst-examines-bus.jpg.webp",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
     },
     {
         id: "4",
-        title: "Стратегический консалтинг и развитие",
-        description: "Долгосрочные планы и тактические решения для роста компании.",
+        title: "Внедрение AI и автоматизация",
+        description: "Интеграция искусственного интеллекта и автоматизация бизнес-процессов.",
         image_url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
     },
     {
         id: "5",
-        title: "Инновации и внедрение AI",
-        description: "Внедрение передовых технологий и искусственного интеллекта для повышения эффективности.",
+        title: "IT решения и цифровизация",
+        description: "Разработка и внедрение ИТ-систем, цифровая трансформация бизнеса.",
         image_url: "https://optim.tildacdn.com/tild3932-3161-4063-a462-616433323530/-/cover/720x504/center/center/-/format/webp/Article2.png.webp",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
     },
     {
         id: "6",
-        title: "Выход вашего бренда на новые рынки",
-        description: "Адаптация стратегии, локализация и поиск возможностей для масштабирования.",
+        title: "Выход вашей компании на новые рынки",
+        description: "Стратегия экспансии, адаптация продуктов и выход на новые сегменты рынка.",
         image_url: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -291,7 +291,7 @@ function SolutionsGrid({ className = "" }) {
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/solutions-grid.tsx",
                                     lineNumber: 54,
-                                    columnNumber: 17
+                                    columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                     src: solution.image_url,
@@ -303,14 +303,14 @@ function SolutionsGrid({ className = "" }) {
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/solutions-grid.tsx",
                                     lineNumber: 55,
-                                    columnNumber: 17
+                                    columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "absolute inset-0 bg-gradient-to-b from-transparent from-50% via-black/60 to-black/90 group-hover:via-black/50 group-hover:to-black/80 transition-colors duration-300 z-20"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/solutions-grid.tsx",
                                     lineNumber: 63,
-                                    columnNumber: 17
+                                    columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "absolute bottom-0 left-0 right-0 p-8 text-white z-30 transition-transform duration-300 group-hover:translate-y-[-4px]",
@@ -321,7 +321,7 @@ function SolutionsGrid({ className = "" }) {
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/solutions-grid.tsx",
                                             lineNumber: 66,
-                                            columnNumber: 19
+                                            columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-white/95 text-base leading-relaxed",
@@ -329,24 +329,24 @@ function SolutionsGrid({ className = "" }) {
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/solutions-grid.tsx",
                                             lineNumber: 67,
-                                            columnNumber: 19
+                                            columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/solutions-grid.tsx",
                                     lineNumber: 65,
-                                    columnNumber: 17
+                                    columnNumber: 15
                                 }, this)
                             ]
                         }, solution.id, true, {
                             fileName: "[project]/src/components/solutions-grid.tsx",
                             lineNumber: 50,
-                            columnNumber: 15
+                            columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/components/solutions-grid.tsx",
                     lineNumber: 48,
-                    columnNumber: 11
+                    columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
@@ -381,9 +381,7 @@ __turbopack_context__.s({
     "ApproachSection": (()=>ApproachSection)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check-big.js [app-client] (ecmascript) <export default as CheckCircle>");
 "use client";
-;
 ;
 function ApproachSection({ className = "" }) {
     const steps = [
@@ -436,7 +434,7 @@ function ApproachSection({ className = "" }) {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-xl text-gp-text-gray max-w-3xl mx-auto",
-                            children: "Мы работаем по методологии, которая гарантирует результаты"
+                            children: "Мы работаем по методологии, которая подтверждена результатами"
                         }, void 0, false, {
                             fileName: "[project]/src/components/approach-section.tsx",
                             lineNumber: 54,
@@ -491,30 +489,6 @@ function ApproachSection({ className = "" }) {
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/approach-section.tsx",
                                     lineNumber: 71,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "mt-6 flex items-center text-gp-primary",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
-                                            className: "w-5 h-5 mr-2"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/approach-section.tsx",
-                                            lineNumber: 73,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-sm font-medium",
-                                            children: "Проверенный подход"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/approach-section.tsx",
-                                            lineNumber: 74,
-                                            columnNumber: 17
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/components/approach-section.tsx",
-                                    lineNumber: 72,
                                     columnNumber: 15
                                 }, this)
                             ]

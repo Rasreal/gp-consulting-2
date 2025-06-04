@@ -69,6 +69,21 @@
       --tw-backdrop-sepia: initial;
       --tw-duration: initial;
       --tw-ease: initial;
+      --tw-animation-delay: 0s;
+      --tw-animation-direction: normal;
+      --tw-animation-duration: initial;
+      --tw-animation-fill-mode: none;
+      --tw-animation-iteration-count: 1;
+      --tw-enter-opacity: 1;
+      --tw-enter-rotate: 0;
+      --tw-enter-scale: 1;
+      --tw-enter-translate-x: 0;
+      --tw-enter-translate-y: 0;
+      --tw-exit-opacity: 1;
+      --tw-exit-rotate: 0;
+      --tw-exit-scale: 1;
+      --tw-exit-translate-x: 0;
+      --tw-exit-translate-y: 0;
     }
   }
 }
@@ -153,6 +168,10 @@
   top: calc(var(--spacing) * 16);
 }
 
+.top-20 {
+  top: calc(var(--spacing) * 20);
+}
+
 .top-\[-10px\] {
   top: -10px;
 }
@@ -215,6 +234,10 @@
 
 .left-3 {
   left: calc(var(--spacing) * 3);
+}
+
+.left-4 {
+  left: calc(var(--spacing) * 4);
 }
 
 .left-\[-250\%\] {
@@ -698,6 +721,10 @@
 
 .max-h-\[60vh\] {
   max-height: 60vh;
+}
+
+.max-h-\[80vh\] {
+  max-height: 80vh;
 }
 
 .min-h-\[40vh\] {
@@ -1305,10 +1332,6 @@
   border-color: var(--color-gray-300);
 }
 
-.border-gray-500 {
-  border-color: var(--color-gray-500);
-}
-
 .border-green-200 {
   border-color: var(--color-green-200);
 }
@@ -1824,6 +1847,10 @@
   padding-block: calc(var(--spacing) * 8);
 }
 
+.py-10 {
+  padding-block: calc(var(--spacing) * 10);
+}
+
 .py-12 {
   padding-block: calc(var(--spacing) * 12);
 }
@@ -1842,10 +1869,6 @@
 
 .py-24 {
   padding-block: calc(var(--spacing) * 24);
-}
-
-.py-32 {
-  padding-block: calc(var(--spacing) * 32);
 }
 
 .py-\[1px\] {
@@ -2640,6 +2663,12 @@
 }
 
 @media (hover: hover) {
+  .hover\:bg-gray-100:hover {
+    background-color: var(--color-gray-100);
+  }
+}
+
+@media (hover: hover) {
   .hover\:bg-green-50:hover {
     background-color: var(--color-green-50);
   }
@@ -2979,7 +3008,7 @@
 }
 
 .data-\[state\=closed\]\:animate-out[data-state="closed"] {
-  animation: exit var(--tw-animation-duration, var(--tw-duration, .15s)) var(--tw-ease, ease);
+  animation: exit var(--tw-animation-duration, var(--tw-duration, .15s)) var(--tw-ease, ease) var(--tw-animation-delay, 0s) var(--tw-animation-iteration-count, 1) var(--tw-animation-direction, normal) var(--tw-animation-fill-mode, none);
 }
 
 .data-\[state\=closed\]\:fade-out-0[data-state="closed"] {
@@ -2999,7 +3028,7 @@
 }
 
 .data-\[state\=open\]\:animate-in[data-state="open"] {
-  animation: enter var(--tw-animation-duration, var(--tw-duration, .15s)) var(--tw-ease, ease);
+  animation: enter var(--tw-animation-duration, var(--tw-duration, .15s)) var(--tw-ease, ease) var(--tw-animation-delay, 0s) var(--tw-animation-iteration-count, 1) var(--tw-animation-direction, normal) var(--tw-animation-fill-mode, none);
 }
 
 .data-\[state\=open\]\:bg-accent[data-state="open"] {
@@ -4081,6 +4110,95 @@
 }
 
 @layer utilities;
+
+@property --tw-animation-delay {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0s;
+}
+
+@property --tw-animation-direction {
+  syntax: "*";
+  inherits: false;
+  initial-value: normal;
+}
+
+@property --tw-animation-duration {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-animation-fill-mode {
+  syntax: "*";
+  inherits: false;
+  initial-value: none;
+}
+
+@property --tw-animation-iteration-count {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --tw-enter-opacity {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --tw-enter-rotate {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --tw-enter-scale {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --tw-enter-translate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --tw-enter-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --tw-exit-opacity {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --tw-exit-rotate {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --tw-exit-scale {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --tw-exit-translate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --tw-exit-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
 
 @property --tw-translate-x {
   syntax: "*";

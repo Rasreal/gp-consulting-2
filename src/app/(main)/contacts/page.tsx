@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock, Linkedin, Send } from "lucide-react";
 import { useState } from "react";
+import { featureFlags } from "@/config/feature-flags";
 
 export default function ContactsPage() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,9 @@ export default function ContactsPage() {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Check if we should show the map
+  const showMap = featureFlags.contactPage.showMap;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +82,7 @@ export default function ContactsPage() {
       </section>
 
       {/* Contact Info & Form */}
-      <section className="py-20">
+      <section className="py-5">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Contact Information */}
@@ -241,7 +245,7 @@ export default function ContactsPage() {
                   size="lg"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Отправка..." : "Отправить сообщение"}
+                  {isSubmitting ? "Отправка..." : "Связаться с нами"}
                 </Button>
               </form>
             </motion.div>
@@ -249,61 +253,63 @@ export default function ContactsPage() {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="py-20">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className=" p-8"
-          >
-            <h2 className="text-2xl font-semibold text-gp-primary text-center mb-8">
-              Наш офис
-            </h2>
-            
-            <div className="relative">
-              {/* Google Maps Embed */}
-              <div className="w-full h-[500px] rounded-xl overflow-hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.5127085543256!2d71.42037007677395!3d51.13088476811791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDA3JzUxLjIiTiA3McKwMjUnMjEuMiJF!5e0!3m2!1sen!2skz!4v1709655124536!5m2!1sen!2skz"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
+      {/* Map Section - Conditionally rendered */}
+      {showMap && (
+        <section className="py-20">
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className=" p-8"
+            >
+              <h2 className="text-2xl font-semibold text-gp-primary text-center mb-8">
+                Наш офис
+              </h2>
+              
+              <div className="relative">
+                {/* Google Maps Embed */}
+                <div className="w-full h-[500px] rounded-xl overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.5127085543256!2d71.42037007677395!3d51.13088476811791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDA3JzUxLjIiTiA3McKwMjUnMjEuMiJF!5e0!3m2!1sen!2skz!4v1709655124536!5m2!1sen!2skz"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
 
-              {/* Overlay Card */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-8 rounded-xl shadow-lg max-w-sm border border-gray-200 w-full mx-4 sm:mx-0 sm:w-auto">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gp-primary mb-2">
-                      GP Consulting
-                    </h3>
-                    <p className="text-gp-primary/70 mb-4">
-                      г. Астана, ул. Достык 20<br />
-                      БЦ &#34;Москва&#34;, 15 этаж
-                    </p>
-                    <Button 
-                      size="sm"
-                      className="bg-black text-white hover:bg-white hover:text-black border border-black"
-                      onClick={() => window.open('https://maps.google.com/?q=51.13088476811791,71.42255932422108', '_blank')}
-                    >
-                      Открыть в Google Maps
-                    </Button>
+                {/* Overlay Card */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-8 rounded-xl shadow-lg max-w-sm border border-gray-200 w-full mx-4 sm:mx-0 sm:w-auto">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gp-primary mb-2">
+                        GP Consulting
+                      </h3>
+                      <p className="text-gp-primary/70 mb-4">
+                        г. Астана, ул. Достык 20<br />
+                        БЦ &#34;Москва&#34;, 15 этаж
+                      </p>
+                      <Button 
+                        size="sm"
+                        className="bg-black text-white hover:bg-white hover:text-black border border-black"
+                        onClick={() => window.open('https://maps.google.com/?q=51.13088476811791,71.42255932422108', '_blank')}
+                      >
+                        Открыть в Google Maps
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            </motion.div>
+          </div>
+        </section>
+      )}
     </PageTemplate>
   );
 } 

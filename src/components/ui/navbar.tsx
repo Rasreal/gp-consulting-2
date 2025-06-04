@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -13,6 +13,10 @@ interface Route {
 }
 
 const routes: Route[] = [
+  {
+    name: "Главная",
+    path: "/",
+  },
   {
     name: "О нас",
     path: "/about",
@@ -26,7 +30,7 @@ const routes: Route[] = [
     path: "/industries",
   },
   {
-    name: "Достижения",
+    name: "Кейсы",
     path: "/achievements",
   },
   {
@@ -49,6 +53,33 @@ export function Navbar() {
     damping: 30,
     restDelta: 0.001,
   });
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isOpen && !target.closest('.mobile-menu') && !target.closest('.menu-button')) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,14 +133,15 @@ export function Navbar() {
                 </Link>
               ))}
               <Button className="bg-white text-gp-primary hover:bg-black hover:text-white" asChild>
-                <Link href="/book">Забронировать встречу</Link>
+                <Link href="/book">Связаться с нами</Link>
               </Button>
             </nav>
 
             {/* Mobile Navigation Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden flex items-center"
+              className="md:hidden flex items-center menu-button"
+              aria-label="Toggle menu"
             >
               {isOpen ? (
                 <X className="h-6 w-6 text-gp-primary" />
@@ -127,38 +159,70 @@ export function Navbar() {
         />
       </motion.header>
 
-      {/* Mobile Navigation Menu */}
-      {isOpen && (
-        <motion.nav
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 top-16 z-40 bg-white p-4 md:hidden"
-        >
-          <div className="flex flex-col space-y-4 py-4">
-            {routes.map((route) => (
-              <Link
-                key={route.path}
-                href={route.path}
-                onClick={() => setIsOpen(false)}
-                className={`px-4 py-3 rounded-md text-base font-medium ${
-                  pathname === route.path
-                    ? "bg-gp-accent/10 text-gp-accent"
-                    : "text-gp-primary/80 hover:text-gp-primary hover:bg-gray-50"
-                }`}
-              >
-                {route.name}
-              </Link>
-            ))}
-            <Button className="bg-white text-gp-primary hover:bg-black hover:text-white" asChild>
-              <Link href="/book" onClick={() => setIsOpen(false)}>
-                Забронировать встречу
-              </Link>
-            </Button>
-          </div>
-        </motion.nav>
-      )}
+      {/* Mobile Navigation Menu - Redesigned */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+            
+            {/* Menu panel */}
+            <motion.nav
+              initial={{ opacity: 0, y: -50, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 300, 
+                damping: 30,
+                duration: 0.3 
+              }}
+              className="fixed top-20 left-4 right-4 z-50 bg-white/95 backdrop-blur-md 
+                        rounded-xl shadow-lg p-4 md:hidden mobile-menu
+                        max-h-[80vh] overflow-y-auto"
+            >
+              <div className="flex flex-col space-y-1">
+                {routes.map((route) => (
+                  <motion.div
+                    key={route.path}
+                    whileHover={{ x: 4 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Link
+                      href={route.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`block px-4 py-3 rounded-lg text-base transition-all ${
+                        pathname === route.path
+                          ? "bg-gp-accent/10 text-gp-accent font-semibold"
+                          : "text-gp-primary/80 hover:bg-gray-100 hover:text-gp-primary"
+                      }`}
+                    >
+                      {route.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+              <div className="mt-6 px-4">
+                <Button 
+                  className="w-full bg-gp-accent text-black border border-gray-200 hover:bg-gp-accent/90" 
+                  asChild
+                >
+                  <Link href="/book" onClick={() => setIsOpen(false)}>
+                    Связаться с нами
+                  </Link>
+                </Button>
+              </div>
+            </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 } 
