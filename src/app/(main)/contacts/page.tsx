@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { MapPin, Phone, Mail, Clock, Linkedin, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Linkedin, Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { featureFlags } from "@/config/feature-flags";
+import { toast } from "sonner";
 
 export default function ContactsPage() {
   const [formData, setFormData] = useState({
@@ -42,10 +43,26 @@ export default function ContactsPage() {
         message: ""
       });
       
-      alert("Сообщение отправлено! Мы свяжемся с вами в ближайшее время.");
+      // Show success toast
+      toast.success("  Заявка отправлена!", {
+        description: "  Мы свяжемся с вами в ближайшее время.",
+        icon: <CheckCircle className="h-6 w-6 text-green-600" />, // увеличена иконка
+        duration: 5000,
+        position: "top-center",
+        className: "rounded-lg shadow-lg text-lg", // увеличен текст (можно использовать text-lg, если нужно ещё больше)
+      });
+      
+      
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Произошла ошибка. Попробуйте еще раз.");
+      
+      // Show error toast
+      toast.error("Произошла ошибка", {
+        description: "Пожалуйста, попробуйте еще раз позже.",
+        duration: 5000,
+        position: "top-center",
+        className: "rounded-lg shadow-lg",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -239,14 +256,19 @@ export default function ContactsPage() {
                   />
                 </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-white text-gp-primary hover:bg-black hover:text-white"
-                  size="lg"
-                  disabled={isSubmitting}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  {isSubmitting ? "Отправка..." : "Связаться с нами"}
-                </Button>
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-white text-gp-primary hover:bg-black hover:text-white"
+                    size="lg"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Отправка..." : "Оставить заявку"}
+                  </Button>
+                </motion.div>
               </form>
             </motion.div>
           </div>

@@ -226,7 +226,7 @@ function Feature73({
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
         >
           {features.length === 0 ? (
             <p className="col-span-full text-center text-lg text-gp-primary/70">

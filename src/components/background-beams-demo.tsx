@@ -41,7 +41,7 @@ export function BackgroundBeamsDemo() {
             viewport={{ once: true }}
           >
             <Button className="bg-white text-gp-primary hover:bg-black hover:text-white" asChild>
-              <Link href="/book">Забронировать встречу</Link>
+              <Link href="/book">Связаться с нами</Link>
             </Button>
           </motion.div>
         </div>

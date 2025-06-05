@@ -41,7 +41,7 @@ export function Header() {
             className="bg-gradient-to-r from-primary to-secondary hover:scale-[1.02] transition-transform" 
             asChild
           >
-            <Link href="/book">Забронировать</Link>
+            <Link href="/book">Связаться с нами</Link>
           </Button>
         </div>
       </div>

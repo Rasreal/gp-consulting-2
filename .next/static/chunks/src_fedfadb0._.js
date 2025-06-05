@@ -1283,7 +1283,7 @@ function BookPage() {
                                                         type: "submit",
                                                         disabled: isSubmitting || !formData.name || !formData.email,
                                                         className: "bg-white text-gp-primary hover:bg-white/90 px-8",
-                                                        children: isSubmitting ? "Бронирование..." : "Забронировать встречу"
+                                                        children: isSubmitting ? "Бронирование..." : "Связаться с нами"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/book/page.tsx",
                                                         lineNumber: 514,

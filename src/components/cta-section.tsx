@@ -13,10 +13,9 @@ export function CTASection({
   title = "Готовы начать трансформацию?",
   description = "Свяжитесь с нами сегодня, чтобы обсудить, как мы можем помочь вашему бизнесу расти и развиваться с помощью инновационных технологий.",
 }: CTASectionProps) {
-  // Determine CTA button text and link based on feature flag
-  const ctaType = featureFlags.homePage.ctaType;
-  const buttonText = ctaType === 'book' ? 'Забронировать встречу' : 'Связаться с нами';
-  const buttonLink = ctaType === 'book' ? '/book' : '/contacts';
+  // Always use "Связаться с нами" and link to /book
+  const buttonText = 'Связаться с нами';
+  const buttonLink = '/book';
 
   return (
     <section className="py-20">

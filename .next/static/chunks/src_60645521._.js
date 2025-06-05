@@ -185,7 +185,7 @@ function TeamSection(props) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "py-24",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "container flex flex-col gap-12 lg:px-16",
+            className: "container flex flex-col gap-12 lg:px-12",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "lg:max-w-sm",
@@ -205,7 +205,7 @@ function TeamSection(props) {
                             viewport: {
                                 once: true
                             },
-                            className: "mb-3 text-xl font-semibold md:mb-4 md:text-4xl lg:mb-6 text-gp-primary",
+                            className: "mb-3 text-xl font-semibold md:mb-1 md:text-4xl lg:mb-6 text-gp-primary",
                             children: heading
                         }, void 0, false, {
                             fileName: "[project]/src/components/team-section.tsx",
@@ -248,17 +248,17 @@ function TeamSection(props) {
                     viewport: {
                         once: true
                     },
-                    className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8",
+                    className: "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6",
                     children: members.map((member, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
                             variants: item,
                             whileHover: {
                                 y: -10,
                                 boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)"
                             },
-                            className: "glass-card overflow-hidden",
+                            className: "glass-card overflow-hidden max-w-[280px] mx-auto w-full",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "relative h-72 w-full",
+                                    className: "relative h-42 w-full",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                         src: member.image,
                                         alt: member.name,
@@ -276,10 +276,10 @@ function TeamSection(props) {
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "p-6",
+                                    className: "p-5",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-xl font-semibold text-gp-primary mb-1",
+                                            className: "text-lg font-semibold text-gp-primary mb-1",
                                             children: member.name
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/team-section.tsx",
@@ -287,7 +287,7 @@ function TeamSection(props) {
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-accent mb-4",
+                                            className: "text-accent mb-3 text-sm",
                                             children: member.position
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/team-section.tsx",
@@ -295,7 +295,7 @@ function TeamSection(props) {
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gp-text-gray mb-6 text-sm",
+                                            className: "text-gp-text-gray mb-4 text-xs line-clamp-3",
                                             children: member.bio
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/team-section.tsx",
@@ -303,15 +303,15 @@ function TeamSection(props) {
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex space-x-3",
+                                            className: "flex space-x-3 mt-auto",
                                             children: [
                                                 member.linkedin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                     href: member.linkedin,
                                                     target: "_blank",
                                                     rel: "noopener noreferrer",
-                                                    className: "p-2 bg-white hover:bg-white/80 rounded-full text-gp-primary transition-colors",
+                                                    className: "p-1.5 bg-white hover:bg-white/80 rounded-full text-gp-primary transition-colors",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$linkedin$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Linkedin$3e$__["Linkedin"], {
-                                                        size: 18
+                                                        size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/team-section.tsx",
                                                         lineNumber: 167,
@@ -324,9 +324,9 @@ function TeamSection(props) {
                                                 }, this),
                                                 member.email && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                     href: `mailto:${member.email}`,
-                                                    className: "p-2 bg-white hover:bg-white/80 rounded-full text-gp-primary transition-colors",
+                                                    className: "p-1.5 bg-white hover:bg-white/80 rounded-full text-gp-primary transition-colors",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"], {
-                                                        size: 18
+                                                        size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/team-section.tsx",
                                                         lineNumber: 175,
@@ -443,7 +443,7 @@ function AboutPage() {
                                 children: "Мы помогаем бизнесу расти с помощью технологий"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/about/page.tsx",
-                                lineNumber: 41,
+                                lineNumber: 40,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -451,23 +451,23 @@ function AboutPage() {
                                 children: "GP Consulting — команда экспертов в области цифровой трансформации, аналитики и искусственного интеллекта. Мы создаем инновационные решения, которые помогают бизнесу достигать новых высот."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/about/page.tsx",
-                                lineNumber: 44,
+                                lineNumber: 43,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/about/page.tsx",
-                        lineNumber: 35,
+                        lineNumber: 34,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/(main)/about/page.tsx",
-                    lineNumber: 34,
+                    lineNumber: 33,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/about/page.tsx",
-                lineNumber: 33,
+                lineNumber: 32,
                 columnNumber: 7
             }, this),
             __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$feature$2d$flags$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["featureFlags"].aboutPage.showTeamSection && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$team$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TeamSection"], {
@@ -476,7 +476,7 @@ function AboutPage() {
                 forceShow: true
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/about/page.tsx",
-                lineNumber: 55,
+                lineNumber: 54,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -503,7 +503,7 @@ function AboutPage() {
                                     children: "Наши ценности"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/about/page.tsx",
-                                    lineNumber: 71,
+                                    lineNumber: 70,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -511,13 +511,13 @@ function AboutPage() {
                                     children: "Принципы, которыми мы руководствуемся в работе с каждым клиентом"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/about/page.tsx",
-                                    lineNumber: 72,
+                                    lineNumber: 71,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/(main)/about/page.tsx",
-                            lineNumber: 65,
+                            lineNumber: 64,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -544,7 +544,7 @@ function AboutPage() {
                                             children: value.title
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/about/page.tsx",
-                                            lineNumber: 87,
+                                            lineNumber: 86,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -552,35 +552,35 @@ function AboutPage() {
                                             children: value.description
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/about/page.tsx",
-                                            lineNumber: 88,
+                                            lineNumber: 87,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, index, true, {
                                     fileName: "[project]/src/app/(main)/about/page.tsx",
-                                    lineNumber: 79,
+                                    lineNumber: 78,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/app/(main)/about/page.tsx",
-                            lineNumber: 77,
+                            lineNumber: 76,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/(main)/about/page.tsx",
-                    lineNumber: 64,
+                    lineNumber: 63,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/about/page.tsx",
-                lineNumber: 63,
+                lineNumber: 62,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/(main)/about/page.tsx",
-        lineNumber: 31,
+        lineNumber: 30,
         columnNumber: 5
     }, this);
 }

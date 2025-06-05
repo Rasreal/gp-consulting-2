@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Linkedin, Mail, MapPin, Phone } from "lucide-react";
@@ -60,7 +62,7 @@ export function Footer() {
               ))}
               <li className="pt-4">
                 <Button className="bg-white text-gp-primary hover:bg-black hover:text-white" asChild>
-                  <Link href="/book">Забронировать встречу</Link>
+                  <Link href="/book">Связаться с нами</Link>
                 </Button>
               </li>
             </ul>

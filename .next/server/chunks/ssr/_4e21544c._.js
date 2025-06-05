@@ -784,7 +784,7 @@ function ContactsPage() {
                                                 className: "w-full bg-white text-gp-primary hover:bg-black hover:text-white",
                                                 size: "lg",
                                                 disabled: isSubmitting,
-                                                children: isSubmitting ? "Отправка..." : "Связаться с нами"
+                                                children: isSubmitting ? "Отправка..." : "Оставить заявку"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/contacts/page.tsx",
                                                 lineNumber: 242,

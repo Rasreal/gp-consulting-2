@@ -104,14 +104,14 @@ export function TeamSection(props: TeamSectionProps): React.ReactNode {
 
   return (
     <section className="py-24">
-      <div className="container flex flex-col gap-12 lg:px-16">
+      <div className="container flex flex-col gap-12 lg:px-12">
         <div className="lg:max-w-sm">
           <motion.h2 
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="mb-3 text-xl font-semibold md:mb-4 md:text-4xl lg:mb-6 text-gp-primary"
+            className="mb-3 text-xl font-semibold md:mb-1 md:text-4xl lg:mb-6 text-gp-primary"
           >
             {heading}
           </motion.h2>
@@ -131,7 +131,7 @@ export function TeamSection(props: TeamSectionProps): React.ReactNode {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
         >
           {members.map((member, index) => (
             <motion.div
@@ -141,9 +141,9 @@ export function TeamSection(props: TeamSectionProps): React.ReactNode {
                 y: -10,
                 boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
               }}
-              className="glass-card overflow-hidden"
+              className="glass-card overflow-hidden max-w-[280px] mx-auto w-full"
             >
-              <div className="relative h-72 w-full">
+              <div className="relative h-42 w-full">
                 <Image
                   src={member.image}
                   alt={member.name}
@@ -152,27 +152,27 @@ export function TeamSection(props: TeamSectionProps): React.ReactNode {
                   unoptimized
                 />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gp-primary mb-1">{member.name}</h3>
-                <p className="text-accent mb-4">{member.position}</p>
-                <p className="text-gp-text-gray mb-6 text-sm">{member.bio}</p>
-                <div className="flex space-x-3">
+              <div className="p-5">
+                <h3 className="text-lg font-semibold text-gp-primary mb-1">{member.name}</h3>
+                <p className="text-accent mb-3 text-sm">{member.position}</p>
+                <p className="text-gp-text-gray mb-4 text-xs line-clamp-3">{member.bio}</p>
+                <div className="flex space-x-3 mt-auto">
                   {member.linkedin && (
                     <a
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-white hover:bg-white/80 rounded-full text-gp-primary transition-colors"
+                      className="p-1.5 bg-white hover:bg-white/80 rounded-full text-gp-primary transition-colors"
                     >
-                      <Linkedin size={18} />
+                      <Linkedin size={14} />
                     </a>
                   )}
                   {member.email && (
                     <a
                       href={`mailto:${member.email}`}
-                      className="p-2 bg-white hover:bg-white/80 rounded-full text-gp-primary transition-colors"
+                      className="p-1.5 bg-white hover:bg-white/80 rounded-full text-gp-primary transition-colors"
                     >
-                      <Mail size={18} />
+                      <Mail size={14} />
                     </a>
                   )}
                 </div>

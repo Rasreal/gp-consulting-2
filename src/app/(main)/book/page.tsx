@@ -516,7 +516,7 @@ export default function BookPage() {
                       disabled={isSubmitting || !formData.name || !formData.email}
                       className="bg-white text-gp-primary hover:bg-white/90 px-8"
                     >
-                      {isSubmitting ? "Бронирование..." : "Забронировать встречу"}
+                      {isSubmitting ? "Бронирование..." : "Связаться с нами"}
                     </Button>
                   </div>
                 </form>

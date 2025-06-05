@@ -40,7 +40,7 @@ const container = {
 
 export function FeaturesGrid() {
   return (
-    <section className="py-20 md:py-32">
+    <section className="py-10 md:py-32">
       <div className="container flex flex-col gap-12 lg:px-16">
         <div className="lg:max-w-sm">
           <motion.h2 

@@ -47,7 +47,7 @@ export const IndustryCard: FC<IndustryCardProps> = ({
                 alt={title}
                 fill
                 priority={true}
-                className="object-fill"
+                className="object-cover"
                 unoptimized
               />
               {/* <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
