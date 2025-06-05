@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { featureFlags } from "@/config/feature-flags";
 
 interface CTASectionProps {
   title?: string;
